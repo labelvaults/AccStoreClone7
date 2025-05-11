@@ -269,8 +269,8 @@ if(isset($getUser) && $getUser["admin"] != 0) {
     echo __("Admin Panel");
     echo "</a></li>\n                            ";
 }
-echo "                        </ul>\n                        <div class=\"navbar-info-group\">\n                            <div class=\"navbar-info\"><i class=\"fa-solid fa-phone\"></i>\n                                <p><small>";
-echo __("Hotline");
+echo "                        </ul>\n                        <div class=\"navbar-info-group\">\n                            <div class=\"navbar-info\"><i class= \"fa-brands fa-telegram\"></i>\n                                <p><small>";
+echo __("Telegram");
 echo "</small><span>";
 echo $CMSNT->site("hotline");
 echo "</span></p>\n                            </div>\n                            <div class=\"navbar-info\"><i class=\"fa-regular fa-envelope\"></i>\n                                <p><small>";

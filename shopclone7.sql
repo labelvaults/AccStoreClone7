@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost
--- Thời gian đã tạo: Th3 02, 2025 lúc 04:10 PM
--- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 7.4.29
+-- Host: localhost:3306
+-- Generation Time: May 11, 2025 at 02:43 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,42 +18,42 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `test`
+-- Database: `shopv7`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `admin_request_logs`
+-- Table structure for table `admin_request_logs`
 --
 
 CREATE TABLE `admin_request_logs` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `request_url` text COLLATE utf8_unicode_ci NOT NULL,
-  `request_method` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `request_params` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `user_agent` text COLLATE utf8_unicode_ci NOT NULL,
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `request_url` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `request_method` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `request_params` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `ip` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `user_agent` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `timestamp` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `admin_role`
+-- Table structure for table `admin_role`
 --
 
 CREATE TABLE `admin_role` (
-  `id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `role` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`role`)),
+  `id` int NOT NULL,
+  `name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `role` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ;
 
 --
--- Đang đổ dữ liệu cho bảng `admin_role`
+-- Dumping data for table `admin_role`
 --
 
 INSERT INTO `admin_role` (`id`, `name`, `role`, `create_gettime`, `update_gettime`) VALUES
@@ -63,849 +63,1022 @@ INSERT INTO `admin_role` (`id`, `name`, `role`, `create_gettime`, `update_gettim
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `aff_log`
+-- Table structure for table `aff_log`
 --
 
 CREATE TABLE `aff_log` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `reason` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sotientruoc` float NOT NULL DEFAULT 0,
-  `sotienthaydoi` float NOT NULL DEFAULT 0,
-  `sotienhientai` float NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `reason` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `sotientruoc` float NOT NULL DEFAULT '0',
+  `sotienthaydoi` float NOT NULL DEFAULT '0',
+  `sotienhientai` float NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `aff_withdraw`
+-- Table structure for table `aff_withdraw`
 --
 
 CREATE TABLE `aff_withdraw` (
-  `id` int(11) NOT NULL,
-  `trans_id` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `bank` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `stk` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` float NOT NULL DEFAULT 0,
-  `status` varchar(25) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'pending',
+  `id` int NOT NULL,
+  `trans_id` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `user_id` int NOT NULL DEFAULT '0',
+  `bank` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `stk` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `amount` float NOT NULL DEFAULT '0',
+  `status` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'pending',
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `reason` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `reason` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `automations`
+-- Table structure for table `automations`
 --
 
 CREATE TABLE `automations` (
-  `id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `type` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `product_id` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `schedule` int(11) NOT NULL DEFAULT 0,
-  `other` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `type` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `product_id` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `schedule` int NOT NULL DEFAULT '0',
+  `other` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `banks`
+-- Table structure for table `banks`
 --
 
 CREATE TABLE `banks` (
-  `id` int(11) NOT NULL,
-  `short_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `accountName` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `accountNumber` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `token` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `short_name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `image` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `accountName` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `accountNumber` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `password` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `status` int NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `block_ip`
+-- Table structure for table `block_ip`
 --
 
 CREATE TABLE `block_ip` (
-  `id` int(11) NOT NULL,
-  `ip` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `attempts` int(11) NOT NULL DEFAULT 0,
-  `banned` int(11) NOT NULL DEFAULT 0,
-  `reason` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `ip` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `attempts` int NOT NULL DEFAULT '0',
+  `banned` int NOT NULL DEFAULT '0',
+  `reason` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cards`
+-- Table structure for table `cards`
 --
 
 CREATE TABLE `cards` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `trans_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telco` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` int(11) NOT NULL DEFAULT 0,
-  `price` int(11) NOT NULL DEFAULT 0,
-  `serial` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `pin` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'pending',
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `trans_id` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `telco` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `amount` int NOT NULL DEFAULT '0',
+  `price` int NOT NULL DEFAULT '0',
+  `serial` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `pin` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `status` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'pending',
   `create_date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
-  `reason` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `reason` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `parent_id` int(11) NOT NULL DEFAULT 0,
-  `id_api` int(11) NOT NULL DEFAULT 0,
-  `supplier_id` int(11) NOT NULL DEFAULT 0,
-  `stt` int(11) NOT NULL DEFAULT 0,
-  `icon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `title` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `keywords` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `id` int NOT NULL,
+  `parent_id` int NOT NULL DEFAULT '0',
+  `id_api` int NOT NULL DEFAULT '0',
+  `supplier_id` int NOT NULL DEFAULT '0',
+  `stt` int NOT NULL DEFAULT '0',
+  `icon` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `title` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `keywords` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `slug` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `content` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `status` int NOT NULL DEFAULT '1',
   `create_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `parent_id`, `id_api`, `supplier_id`, `stt`, `icon`, `name`, `title`, `description`, `keywords`, `slug`, `content`, `status`, `create_date`) VALUES
+(1, 0, 0, 0, 0, 'assets/storage/images/categoryI610.png', 'Email', NULL, '', NULL, 'email', NULL, 1, '2025-05-10 01:51:49'),
+(2, 0, 0, 0, 1, 'assets/storage/images/iconBT5W.png', 'Facebook', NULL, '', NULL, 'facebook', NULL, 1, '2025-05-10 01:53:05'),
+(3, 1, 0, 0, 0, 'assets/storage/images/iconSJ14.png', 'Tài khoản email live 2 ngày', NULL, '', NULL, 'tai-khoan-email-live-2-ngay', NULL, 1, '2025-05-10 01:54:54');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `coupons`
+-- Table structure for table `coupons`
 --
 
 CREATE TABLE `coupons` (
-  `id` int(11) NOT NULL,
-  `code` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `code` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `product_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `amount` int(11) NOT NULL DEFAULT 0,
-  `used` int(11) NOT NULL DEFAULT 0,
-  `discount` float NOT NULL DEFAULT 0,
+  `amount` int NOT NULL DEFAULT '0',
+  `used` int NOT NULL DEFAULT '0',
+  `discount` float NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `min` int(11) NOT NULL DEFAULT 1000,
-  `max` int(11) NOT NULL DEFAULT 10000000
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `min` int NOT NULL DEFAULT '1000',
+  `max` int NOT NULL DEFAULT '10000000'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `coupon_used`
+-- Table structure for table `coupon_used`
 --
 
 CREATE TABLE `coupon_used` (
-  `id` int(11) NOT NULL,
-  `coupon_id` int(11) NOT NULL DEFAULT 0,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `trans_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `coupon_id` int NOT NULL DEFAULT '0',
+  `user_id` int NOT NULL DEFAULT '0',
+  `trans_id` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `currencies`
+-- Table structure for table `currencies`
 --
 
 CREATE TABLE `currencies` (
-  `id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `code` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `rate` float NOT NULL DEFAULT 0,
-  `symbol_left` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `symbol_right` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `seperator` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `display` int(11) NOT NULL DEFAULT 1,
-  `default_currency` int(11) NOT NULL DEFAULT 0,
-  `decimal_currency` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `code` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `rate` float NOT NULL DEFAULT '0',
+  `symbol_left` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `symbol_right` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `seperator` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `display` int NOT NULL DEFAULT '1',
+  `default_currency` int NOT NULL DEFAULT '0',
+  `decimal_currency` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `currencies`
+-- Dumping data for table `currencies`
 --
 
 INSERT INTO `currencies` (`id`, `name`, `code`, `rate`, `symbol_left`, `symbol_right`, `seperator`, `display`, `default_currency`, `decimal_currency`) VALUES
-(3, 'Đồng', 'VND', 1, '', 'đ', 'dot', 1, 1, 0),
-(4, 'Dollar', 'USD', 24000, '$', '', 'dot', 1, 0, 2);
+(3, 'Đồng', 'VND', 1, '', 'đ', 'dot', 0, 0, 0),
+(4, 'Dollar', 'USD', 24000, '$', '', 'dot', 1, 1, 2);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `deposit_log`
+-- Table structure for table `deposit_log`
 --
 
 CREATE TABLE `deposit_log` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` float NOT NULL DEFAULT 0,
-  `received` float NOT NULL DEFAULT 0,
-  `create_time` int(11) DEFAULT 0,
-  `is_virtual` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `method` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `amount` float NOT NULL DEFAULT '0',
+  `received` float NOT NULL DEFAULT '0',
+  `create_time` int DEFAULT '0',
+  `is_virtual` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `dongtien`
+-- Table structure for table `dongtien`
 --
 
 CREATE TABLE `dongtien` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `sotientruoc` float NOT NULL DEFAULT 0,
-  `sotienthaydoi` float NOT NULL DEFAULT 0,
-  `sotiensau` float NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `sotientruoc` float NOT NULL DEFAULT '0',
+  `sotienthaydoi` float NOT NULL DEFAULT '0',
+  `sotiensau` float NOT NULL DEFAULT '0',
   `thoigian` datetime NOT NULL,
-  `noidung` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `transid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `noidung` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `transid` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `dongtien`
+--
+
+INSERT INTO `dongtien` (`id`, `user_id`, `sotientruoc`, `sotienthaydoi`, `sotiensau`, `thoigian`, `noidung`, `transid`) VALUES
+(1, 1, 100000000, 60, 99999900, '2025-05-10 02:03:03', 'Thanh toán đơn hàng mua tài khoản <b>email 01</b> - #R6N3681e51671be90', 'ORDER_R6N3681e51671be90'),
+(2, 1, 99999900, 300000, 99699900, '2025-05-10 02:08:23', 'Thanh toán đơn hàng mua tài khoản <b>email 02</b> - #8WJF681e52a79956b', 'ORDER_8WJF681e52a79956b'),
+(3, 1, 99699900, 300000, 99999900, '2025-05-10 02:13:18', 'Hoàn tiền đơn hàng #8WJF681e52a79956b', 'REFUND_ORDER_8WJF681e52a79956b');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `email_campaigns`
+-- Table structure for table `email_campaigns`
 --
 
 CREATE TABLE `email_campaigns` (
-  `id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subject` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cc` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bcc` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` longblob DEFAULT NULL,
+  `id` int NOT NULL,
+  `name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `subject` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `cc` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `bcc` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `content` longblob,
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `status` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `email_sending`
+-- Table structure for table `email_sending`
 --
 
 CREATE TABLE `email_sending` (
-  `id` int(11) NOT NULL,
-  `camp_id` int(11) DEFAULT 0,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `camp_id` int DEFAULT '0',
+  `user_id` int NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `response` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `response` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `failed_attempts`
+-- Table structure for table `failed_attempts`
 --
 
 CREATE TABLE `failed_attempts` (
-  `id` int(11) NOT NULL,
-  `ip_address` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `attempts` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `attempts` int NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL,
-  `type` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `type` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `failed_attempts`
+--
+
+INSERT INTO `failed_attempts` (`id`, `ip_address`, `attempts`, `create_gettime`, `type`) VALUES
+(1, '127.0.0.1', 1, '2025-05-10 14:10:35', 'Login');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `favorites`
+-- Table structure for table `favorites`
 --
 
 CREATE TABLE `favorites` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `product_id` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `product_id` int NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `languages`
+-- Table structure for table `languages`
 --
 
 CREATE TABLE `languages` (
-  `id` int(11) NOT NULL,
-  `lang` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `code` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `icon` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lang_default` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `lang` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `code` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `icon` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `lang_default` int NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `languages`
+-- Dumping data for table `languages`
 --
 
 INSERT INTO `languages` (`id`, `lang`, `code`, `icon`, `lang_default`, `status`) VALUES
-(1, 'Vietnamese', 'vi', 'assets/storage/flags/flag_Vietnamese.png', 1, 1),
-(2, 'English', 'en', 'assets/storage/flags/flag_English.png', 0, 1),
-(19, 'Thailand', 'th', 'assets/storage/flags/flag_Thailand.png', 0, 1),
-(20, 'Chinese', 'zh', 'assets/storage/flags/flag_Chinese.png', 0, 1);
+(1, 'Vietnamese', 'vi', 'assets/storage/flags/flag_Vietnamese.png', 0, 1),
+(2, 'English', 'en', 'assets/storage/flags/flag_English.png', 1, 1),
+(20, 'Chinese', 'zh', 'assets/storage/flags/flag_Chinese.png', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `logs`
+-- Table structure for table `logs`
 --
 
 CREATE TABLE `logs` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `device` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `ip` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `device` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `createdate` datetime NOT NULL,
-  `action` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `action` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`id`, `user_id`, `ip`, `device`, `createdate`, `action`) VALUES
+(1, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:23:12', 'Create an account'),
+(2, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:29:50', 'Set mặc định tiền tệ (Dollar ID 4)'),
+(3, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:30:16', 'Set default language (English ID 2)'),
+(4, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:38:00', 'Thay đổi thông tin trong trang cài đặt'),
+(5, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:51:49', 'Add Category (Email).'),
+(6, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:53:05', 'Add Category (Facebook).'),
+(7, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:54:04', 'Edit Category (Email ID 1).'),
+(8, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:54:54', 'Add Category (Tài khoản email live 2 ngày).'),
+(9, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:57:41', 'Add Product (email 01).'),
+(10, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:58:15', 'Edit Category (Tài khoản email live 2 ngày ID 3).'),
+(11, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 01:59:50', 'Import tài khoản vào kho hàng 681e4f934ea85'),
+(12, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:00:10', 'Import tài khoản vào kho hàng 681e4f934ea85'),
+(13, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:00:55', 'Delete Account Stock (12)'),
+(14, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:00:55', 'Delete Account Stock (12)'),
+(15, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:00:55', 'Delete Account Stock (12)'),
+(16, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:00:55', 'Delete Account Stock (12)'),
+(17, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:01:35', 'Add Product (email 02).'),
+(18, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:03:53', 'Update Status Product (ID 2)'),
+(19, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:03:54', 'Update Status Product (ID 2)'),
+(20, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:04:01', 'Xoá sản phẩm (email 02 ID 2)'),
+(21, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:04:38', 'Add Product (email 02).'),
+(22, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:05:19', 'Edit Product (email 02 ID 3).'),
+(23, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:05:45', 'Import tài khoản vào kho hàng 681e51a2d9871'),
+(24, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:08:38', 'Delete order (R6N3681e51671be90)'),
+(25, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:08:56', 'Delete order (8WJF681e52a79956b)'),
+(26, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:09:19', 'View order (8WJF681e52a79956b)'),
+(27, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:09:48', 'View order (8WJF681e52a79956b)'),
+(28, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:13:00', 'Download order (8WJF681e52a79956b)'),
+(29, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:13:09', 'View order (8WJF681e52a79956b)'),
+(30, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:13:18', 'Hoàn tiền đơn hàng (8WJF681e52a79956b)'),
+(31, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:23:14', 'Xoá ngôn ngữ (Thailand ID 19)'),
+(32, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:23:25', 'Chỉnh sửa ngôn ngữ (1).'),
+(33, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:23:35', 'Chỉnh sửa ngôn ngữ (20).'),
+(34, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:23:46', 'Chỉnh sửa tiền tệ (Đồng).'),
+(35, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:29:04', 'Thay đổi thông tin trong trang cài đặt'),
+(36, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:31:06', 'Thay đổi thông tin trong trang cài đặt'),
+(37, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:32:51', 'Thay đổi thông tin trong trang cài đặt'),
+(38, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 02:33:55', 'Thay đổi thông tin trong trang cài đặt'),
+(39, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 14:10:40', '[Warning] Thực hiện đăng nhập vào website'),
+(40, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 14:16:10', 'Thay đổi thông tin trong trang cài đặt'),
+(41, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:09:42', 'Chỉnh sửa ngôn ngữ (1).'),
+(42, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:16:54', 'Thay đổi thông tin trong trang cài đặt'),
+(43, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:19:31', 'Thay đổi thông tin trong trang cài đặt'),
+(44, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:25:15', 'Thay đổi thông tin trong trang cài đặt'),
+(45, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:25:24', 'Thay đổi thông tin trong trang cài đặt'),
+(46, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:32:03', 'Thay đổi thông tin trong trang cài đặt'),
+(47, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:35:21', 'Thay đổi thông tin trong trang cài đặt'),
+(48, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:37:32', 'Thay đổi thông tin trong trang cài đặt'),
+(49, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:38:00', 'View order (8WJF681e52a79956b)'),
+(50, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:39:30', 'Thay đổi thông tin trong trang cài đặt'),
+(51, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-10 22:39:49', 'Thay đổi thông tin trong trang cài đặt'),
+(52, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 00:39:38', 'Thay đổi thông tin trong trang cài đặt'),
+(53, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 01:02:31', 'Set default language (Vietnamese ID 1)'),
+(54, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 01:02:34', 'Set default language (English ID 2)'),
+(55, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 01:08:09', 'Add Translate (test).'),
+(56, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 01:08:47', 'Xoá nội dung ngôn ngữ (test)'),
+(57, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 01:08:58', 'Add Translate (test).'),
+(58, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 01:09:39', 'Add Translate (test).'),
+(59, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 01:10:01', 'Xoá nội dung ngôn ngữ (test:)'),
+(60, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 01:10:03', 'Xoá nội dung ngôn ngữ (test)'),
+(61, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 08:45:53', '[Warning] Thực hiện đăng nhập vào website'),
+(62, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 08:52:36', 'Thay đổi thông tin trong trang cài đặt'),
+(63, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 08:56:59', 'Thay đổi thông tin trong trang cài đặt'),
+(64, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 08:57:22', 'Crypto Deposit Configuration'),
+(65, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 09:21:06', 'Cấu hình nạp tiền Flutterwave'),
+(66, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 09:21:16', 'Cấu hình nạp tiền Ngân Hàng'),
+(67, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 09:22:12', 'Cấu hình nạp tiền Squadco'),
+(68, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 09:22:21', 'Cấu hình nạp tiền Toyyibpay'),
+(69, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 09:23:25', 'Cấu hình nạp thẻ cào'),
+(70, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 09:23:45', 'Cấu hình nạp MOMO'),
+(71, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 09:26:27', 'Tạo trang thanh toán thủ công (Thanh Toán qua Stripe).'),
+(72, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', '2025-05-11 09:32:13', 'Cập nhật trang thanh toán thủ công (Stripe).');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `log_bank_auto`
+-- Table structure for table `log_bank_auto`
 --
 
 CREATE TABLE `log_bank_auto` (
-  `id` int(11) NOT NULL,
-  `tid` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `method` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `type` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` float NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `tid` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `method` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `type` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `amount` float NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `log_ref`
+-- Table structure for table `log_ref`
 --
 
 CREATE TABLE `log_ref` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `reason` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sotientruoc` float NOT NULL DEFAULT 0,
-  `sotienthaydoi` float NOT NULL DEFAULT 0,
-  `sotienhientai` float NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `reason` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `sotientruoc` float NOT NULL DEFAULT '0',
+  `sotienthaydoi` float NOT NULL DEFAULT '0',
+  `sotienhientai` float NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `menu`
+-- Table structure for table `menu`
 --
 
 CREATE TABLE `menu` (
-  `id` int(11) NOT NULL,
-  `parent_id` int(11) NOT NULL DEFAULT 0,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `icon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `href` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
-  `target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `position` int(11) NOT NULL DEFAULT 3,
-  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `parent_id` int NOT NULL DEFAULT '0',
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `slug` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `icon` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `href` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `status` int NOT NULL DEFAULT '0',
+  `target` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `position` int NOT NULL DEFAULT '3',
+  `content` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `momo`
+-- Table structure for table `momo`
 --
 
 CREATE TABLE `momo` (
-  `id` int(11) NOT NULL,
-  `request_id` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tranId` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `partnerId` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `partnerName` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `received` int(11) NOT NULL DEFAULT 0,
-  `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `request_id` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `tranId` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `partnerId` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `partnerName` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `amount` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `received` int NOT NULL DEFAULT '0',
+  `comment` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `time` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT 0,
-  `status` varchar(32) COLLATE utf8_unicode_ci DEFAULT 'xuly'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+  `user_id` int DEFAULT '0',
+  `status` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT 'xuly'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `order_log`
+-- Table structure for table `order_log`
 --
 
 CREATE TABLE `order_log` (
-  `id` int(11) NOT NULL,
-  `buyer` int(11) NOT NULL,
-  `product_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `pay` float NOT NULL DEFAULT 0,
-  `amount` int(11) NOT NULL DEFAULT 0,
-  `create_time` int(11) NOT NULL,
-  `is_virtual` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `buyer` int NOT NULL,
+  `product_name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `pay` float NOT NULL DEFAULT '0',
+  `amount` int NOT NULL DEFAULT '0',
+  `create_time` int NOT NULL,
+  `is_virtual` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `order_log`
+--
+
+INSERT INTO `order_log` (`id`, `buyer`, `product_name`, `pay`, `amount`, `create_time`, `is_virtual`) VALUES
+(1, 1, 'email 01', 60, 3, 1746817383, 0),
+(2, 1, 'email 02', 300000, 3, 1746817703, 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_bank`
+-- Table structure for table `payment_bank`
 --
 
 CREATE TABLE `payment_bank` (
-  `id` int(11) NOT NULL,
-  `method` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` int(11) DEFAULT 0,
-  `received` int(11) DEFAULT 0,
+  `id` int NOT NULL,
+  `method` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `tid` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `amount` int DEFAULT '0',
+  `received` int DEFAULT '0',
   `create_gettime` datetime DEFAULT NULL,
-  `create_time` int(11) DEFAULT 0,
-  `user_id` int(11) DEFAULT 0,
-  `notication` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+  `create_time` int DEFAULT '0',
+  `user_id` int DEFAULT '0',
+  `notication` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_crypto`
+-- Table structure for table `payment_crypto`
 --
 
 CREATE TABLE `payment_crypto` (
-  `id` int(11) NOT NULL,
-  `trans_id` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `request_id` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` decimal(18,4) NOT NULL DEFAULT 0.0000,
-  `received` float NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `trans_id` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `request_id` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `amount` decimal(18,4) NOT NULL DEFAULT '0.0000',
+  `received` float NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `status` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'waiting',
-  `msg` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `url_payment` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `status` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'waiting',
+  `msg` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `url_payment` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_flutterwave`
+-- Table structure for table `payment_flutterwave`
 --
 
 CREATE TABLE `payment_flutterwave` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `tx_ref` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` float NOT NULL DEFAULT 0,
-  `price` float NOT NULL DEFAULT 0,
-  `currency` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `tx_ref` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `amount` float NOT NULL DEFAULT '0',
+  `price` float NOT NULL DEFAULT '0',
+  `currency` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `status` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'pending'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `status` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_manual`
+-- Table structure for table `payment_manual`
 --
 
 CREATE TABLE `payment_manual` (
-  `id` int(11) NOT NULL,
-  `icon` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `title` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `display` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `icon` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `title` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `slug` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `content` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `display` int NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `payment_manual`
+--
+
+INSERT INTO `payment_manual` (`id`, `icon`, `title`, `slug`, `description`, `content`, `display`, `create_gettime`, `update_gettime`) VALUES
+(1, 'assets/storage/images/icon_gatewayXZN7.png', 'Stripe', 'stripe', '', '', 1, '2025-05-11 09:26:27', '2025-05-11 09:32:13');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_momo`
+-- Table structure for table `payment_momo`
 --
 
 CREATE TABLE `payment_momo` (
-  `id` int(11) NOT NULL,
-  `method` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tid` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` int(11) DEFAULT 0,
-  `received` int(11) DEFAULT 0,
+  `id` int NOT NULL,
+  `method` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `tid` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `amount` int DEFAULT '0',
+  `received` int DEFAULT '0',
   `create_gettime` datetime DEFAULT NULL,
-  `create_time` int(11) DEFAULT 0,
-  `user_id` int(11) DEFAULT 0,
-  `notication` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+  `create_time` int DEFAULT '0',
+  `user_id` int DEFAULT '0',
+  `notication` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_paypal`
+-- Table structure for table `payment_paypal`
 --
 
 CREATE TABLE `payment_paypal` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `trans_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` float NOT NULL DEFAULT 0,
-  `price` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `trans_id` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `amount` float NOT NULL DEFAULT '0',
+  `price` int NOT NULL DEFAULT '0',
   `create_date` datetime NOT NULL,
-  `create_time` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `create_time` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_pm`
+-- Table structure for table `payment_pm`
 --
 
 CREATE TABLE `payment_pm` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `payment_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` int(11) NOT NULL DEFAULT 0,
-  `price` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `payment_id` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `amount` int NOT NULL DEFAULT '0',
+  `price` int NOT NULL DEFAULT '0',
   `create_date` datetime NOT NULL,
-  `create_time` int(11) NOT NULL DEFAULT 0,
+  `create_time` int NOT NULL DEFAULT '0',
   `update_date` datetime NOT NULL,
-  `update_time` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `update_time` int NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_squadco`
+-- Table structure for table `payment_squadco`
 --
 
 CREATE TABLE `payment_squadco` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `transaction_ref` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` float NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `transaction_ref` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `amount` float NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL,
-  `price` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `price` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_thesieure`
+-- Table structure for table `payment_thesieure`
 --
 
 CREATE TABLE `payment_thesieure` (
-  `id` int(11) NOT NULL,
-  `method` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tid` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` int(11) NOT NULL DEFAULT 0,
-  `received` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `method` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `tid` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `amount` int NOT NULL DEFAULT '0',
+  `received` int NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL,
-  `create_time` int(11) NOT NULL DEFAULT 0,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `notication` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `create_time` int NOT NULL DEFAULT '0',
+  `user_id` int NOT NULL DEFAULT '0',
+  `notication` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_toyyibpay`
+-- Table structure for table `payment_toyyibpay`
 --
 
 CREATE TABLE `payment_toyyibpay` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `trans_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `billName` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `trans_id` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `billName` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `amount` float NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
-  `BillCode` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `BillCode` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `reason` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `reason` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `payment_xipay`
+-- Table structure for table `payment_xipay`
 --
 
 CREATE TABLE `payment_xipay` (
-  `id` int(11) NOT NULL,
-  `out_trade_no` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `transaction_id` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Mã giao dịch do Xipay trả về',
-  `type` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Phương thức thanh toán (alipay, wxpay...)',
-  `price` decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Số tiền thực nhận',
-  `amount` decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Số tiền thanh toán',
-  `param` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tham số mở rộng',
-  `product_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tên sản phẩm/dịch vụ',
-  `status` tinyint(4) DEFAULT 0 COMMENT 'Trạng thái giao dịch: 0=pending,1=success,2=fail...',
-  `notify_data` text COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Lưu dữ liệu notify (nếu cần)',
-  `created_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `user_id` int(11) DEFAULT NULL COMMENT 'ID user trong hệ thống (nếu có)',
-  `notication` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `out_trade_no` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `transaction_id` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Mã giao dịch do Xipay trả về',
+  `type` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Phương thức thanh toán (alipay, wxpay...)',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Số tiền thực nhận',
+  `amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'Số tiền thanh toán',
+  `param` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Tham số mở rộng',
+  `product_name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Tên sản phẩm/dịch vụ',
+  `status` tinyint DEFAULT '0' COMMENT 'Trạng thái giao dịch: 0=pending,1=success,2=fail...',
+  `notify_data` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci COMMENT 'Lưu dữ liệu notify (nếu cần)',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int DEFAULT NULL COMMENT 'ID user trong hệ thống (nếu có)',
+  `notication` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `posts`
+-- Table structure for table `posts`
 --
 
 CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `stt` int(11) NOT NULL DEFAULT 0,
-  `category_id` int(11) NOT NULL DEFAULT 0,
-  `title` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
-  `view` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `stt` int NOT NULL DEFAULT '0',
+  `category_id` int NOT NULL DEFAULT '0',
+  `title` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `image` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `slug` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `content` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `status` int NOT NULL DEFAULT '0',
+  `view` int NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `post_category`
+-- Table structure for table `post_category`
 --
 
 CREATE TABLE `post_category` (
-  `id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` text COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `icon` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `id` int NOT NULL,
+  `name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `slug` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `icon` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `status` int NOT NULL DEFAULT '1',
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `products`
+-- Table structure for table `products`
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `stt` int(11) NOT NULL DEFAULT 0,
-  `code` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `short_desc` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `images` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `note` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `price` float NOT NULL DEFAULT 0,
-  `cost` float NOT NULL DEFAULT 0,
-  `discount` float NOT NULL DEFAULT 0,
-  `min` int(111) NOT NULL DEFAULT 1,
-  `max` int(11) NOT NULL DEFAULT 1000000,
-  `flag` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sold` int(11) NOT NULL DEFAULT 0,
-  `category_id` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `id` int NOT NULL,
+  `stt` int NOT NULL DEFAULT '0',
+  `code` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `short_desc` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `images` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `description` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `note` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `price` float NOT NULL DEFAULT '0',
+  `cost` float NOT NULL DEFAULT '0',
+  `discount` float NOT NULL DEFAULT '0',
+  `min` int NOT NULL DEFAULT '1',
+  `max` int NOT NULL DEFAULT '1000000',
+  `flag` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `sold` int NOT NULL DEFAULT '0',
+  `category_id` int NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '1',
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `check_live` varchar(55) COLLATE utf8_unicode_ci DEFAULT 'None',
-  `supplier_id` int(11) NOT NULL DEFAULT 0,
-  `api_id` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `api_name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `api_stock` int(11) NOT NULL DEFAULT 0,
-  `api_time_update` int(11) NOT NULL DEFAULT 0,
-  `text_txt` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `order_by` int(11) NOT NULL DEFAULT 1,
-  `allow_api` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `check_live` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT 'None',
+  `supplier_id` int NOT NULL DEFAULT '0',
+  `api_id` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `api_name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `api_stock` int NOT NULL DEFAULT '0',
+  `api_time_update` int NOT NULL DEFAULT '0',
+  `text_txt` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `order_by` int NOT NULL DEFAULT '1',
+  `allow_api` int NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `stt`, `code`, `user_id`, `name`, `slug`, `short_desc`, `images`, `description`, `note`, `price`, `cost`, `discount`, `min`, `max`, `flag`, `sold`, `category_id`, `status`, `create_gettime`, `update_gettime`, `check_live`, `supplier_id`, `api_id`, `api_name`, `api_stock`, `api_time_update`, `text_txt`, `order_by`, `allow_api`) VALUES
+(1, 0, '681e4f934ea85', 1, 'email 01', 'email-01', 'test short', '', 'PHA+dGVzdCBsb25nPC9wPg0K', 'PHA+dGVzdCBkZXRhaWw8L3A+DQo=', 20, 15, 0, 1, 10, 'us', 3, 3, 1, '2025-05-10 01:57:41', '2025-05-10 01:57:41', 'None', 0, NULL, NULL, 0, 0, '123|234\r\n123|1213', 1, 1),
+(3, 0, '681e51a2d9871', 1, 'email 02', 'email-02', '', '', '', '', 100000, 100000, 0, 1, 1000000, '', 3, 3, 1, '2025-05-10 02:04:38', '2025-05-10 02:05:19', 'None', 0, NULL, NULL, 0, 0, '', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_die`
+-- Table structure for table `product_die`
 --
 
 CREATE TABLE `product_die` (
-  `id` int(11) NOT NULL,
-  `product_code` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `seller` int(11) NOT NULL DEFAULT 0,
-  `uid` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `account` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `product_code` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `seller` int NOT NULL DEFAULT '0',
+  `uid` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `account` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `create_gettime` datetime NOT NULL,
-  `type` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `type` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_discount`
+-- Table structure for table `product_discount`
 --
 
 CREATE TABLE `product_discount` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL DEFAULT 0,
-  `discount` float NOT NULL DEFAULT 0,
-  `min` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `product_id` int NOT NULL DEFAULT '0',
+  `discount` float NOT NULL DEFAULT '0',
+  `min` int NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_order`
+-- Table structure for table `product_order`
 --
 
 CREATE TABLE `product_order` (
-  `id` int(11) NOT NULL,
-  `trans_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `product_id` int(11) NOT NULL DEFAULT 0,
-  `supplier_id` int(11) NOT NULL DEFAULT 0,
-  `product_name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `buyer` int(11) NOT NULL DEFAULT 0,
-  `seller` int(11) NOT NULL DEFAULT 0,
-  `amount` int(11) NOT NULL DEFAULT 0,
-  `money` float NOT NULL DEFAULT 0,
-  `pay` float NOT NULL DEFAULT 0,
-  `cost` int(11) NOT NULL DEFAULT 0,
-  `commission_fee` float NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `trans_id` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `product_id` int NOT NULL DEFAULT '0',
+  `supplier_id` int NOT NULL DEFAULT '0',
+  `product_name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `buyer` int NOT NULL DEFAULT '0',
+  `seller` int NOT NULL DEFAULT '0',
+  `amount` int NOT NULL DEFAULT '0',
+  `money` float NOT NULL DEFAULT '0',
+  `pay` float NOT NULL DEFAULT '0',
+  `cost` int NOT NULL DEFAULT '0',
+  `commission_fee` float NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `trash` int(11) NOT NULL DEFAULT 0,
-  `refund` int(11) NOT NULL DEFAULT 0,
-  `ip` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `device` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status_view_order` int(11) NOT NULL DEFAULT 0,
-  `api_transid` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `note` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `trash` int NOT NULL DEFAULT '0',
+  `refund` int NOT NULL DEFAULT '0',
+  `ip` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `device` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `status_view_order` int NOT NULL DEFAULT '0',
+  `api_transid` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `note` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `product_order`
+--
+
+INSERT INTO `product_order` (`id`, `trans_id`, `product_id`, `supplier_id`, `product_name`, `buyer`, `seller`, `amount`, `money`, `pay`, `cost`, `commission_fee`, `create_gettime`, `update_gettime`, `trash`, `refund`, `ip`, `device`, `status_view_order`, `api_transid`, `note`) VALUES
+(1, 'R6N3681e51671be90', 1, 0, 'email 01', 1, 1, 3, 60, 60, 45, 0, '2025-05-10 02:03:03', '2025-05-10 02:03:03', 1, 0, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 0, '', NULL),
+(2, '8WJF681e52a79956b', 3, 0, 'email 02', 1, 1, 3, 0, 0, 0, 0, '2025-05-10 02:08:23', '2025-05-10 02:08:23', 1, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 0, '', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_sold`
+-- Table structure for table `product_sold`
 --
 
 CREATE TABLE `product_sold` (
-  `id` int(11) NOT NULL,
-  `product_code` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `trans_id` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `supplier_id` int(11) NOT NULL DEFAULT 0,
-  `buyer` int(11) NOT NULL DEFAULT 0,
-  `seller` int(11) NOT NULL DEFAULT 0,
-  `uid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `account` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `product_code` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `trans_id` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `supplier_id` int NOT NULL DEFAULT '0',
+  `buyer` int NOT NULL DEFAULT '0',
+  `seller` int NOT NULL DEFAULT '0',
+  `uid` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `account` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `create_gettime` datetime NOT NULL,
-  `time_check_live` int(11) NOT NULL DEFAULT 0,
-  `type` varchar(55) COLLATE utf8_unicode_ci DEFAULT 'WEB'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `time_check_live` int NOT NULL DEFAULT '0',
+  `type` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT 'WEB'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `product_sold`
+--
+
+INSERT INTO `product_sold` (`id`, `product_code`, `trans_id`, `supplier_id`, `buyer`, `seller`, `uid`, `account`, `create_gettime`, `time_check_live`, `type`) VALUES
+(1, '681e4f934ea85', 'R6N3681e51671be90', 0, 1, 1, '12', '12|2323', '2025-05-10 02:03:03', 0, 'WEB'),
+(2, '681e4f934ea85', 'R6N3681e51671be90', 0, 1, 1, '12', '12|2323', '2025-05-10 02:03:03', 0, 'WEB'),
+(3, '681e4f934ea85', 'R6N3681e51671be90', 0, 1, 1, '12', '12|2323', '2025-05-10 02:03:03', 0, 'WEB'),
+(4, '681e51a2d9871', '8WJF681e52a79956b', 0, 1, 1, 'abc', 'abc|bcd', '2025-05-10 02:08:23', 0, 'WEB'),
+(5, '681e51a2d9871', '8WJF681e52a79956b', 0, 1, 1, '12323', '12323|202020', '2025-05-10 02:08:23', 0, 'WEB'),
+(6, '681e51a2d9871', '8WJF681e52a79956b', 0, 1, 1, 'abc', 'abc|bcd', '2025-05-10 02:08:23', 0, 'WEB');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_stock`
+-- Table structure for table `product_stock`
 --
 
 CREATE TABLE `product_stock` (
-  `id` int(11) NOT NULL,
-  `product_code` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `seller` int(11) NOT NULL DEFAULT 0,
-  `uid` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `account` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `product_code` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `seller` int NOT NULL DEFAULT '0',
+  `uid` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `account` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `create_gettime` datetime NOT NULL,
-  `type` varchar(55) COLLATE utf8_unicode_ci DEFAULT 'WEB',
-  `time_check_live` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `type` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT 'WEB',
+  `time_check_live` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `product_stock`
+--
+
+INSERT INTO `product_stock` (`id`, `product_code`, `seller`, `uid`, `account`, `create_gettime`, `type`, `time_check_live`) VALUES
+(4, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 01:59:50', 'WEB', 0),
+(5, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 01:59:50', 'WEB', 0),
+(6, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 01:59:50', 'WEB', 0),
+(7, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 01:59:50', 'WEB', 0),
+(8, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 01:59:50', 'WEB', 0),
+(9, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 01:59:50', 'WEB', 0),
+(10, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 01:59:50', 'WEB', 0),
+(11, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 02:00:10', 'WEB', 0),
+(12, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 02:00:10', 'WEB', 0),
+(13, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 02:00:10', 'WEB', 0),
+(14, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 02:00:10', 'WEB', 0),
+(15, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 02:00:10', 'WEB', 0),
+(16, '681e4f934ea85', 1, '12', '12|2323', '2025-05-10 02:00:10', 'WEB', 0),
+(24, '681e51a2d9871', 1, '12323', '12323|202020', '2025-05-10 02:05:45', 'WEB', 0),
+(25, '681e51a2d9871', 1, 'abc', 'abc|bcd', '2025-05-10 02:05:45', 'WEB', 0),
+(26, '681e51a2d9871', 1, '12323', '12323|202020', '2025-05-10 02:05:45', 'WEB', 0),
+(27, '681e51a2d9871', 1, 'abc', 'abc|bcd', '2025-05-10 02:05:45', 'WEB', 0),
+(28, '681e51a2d9871', 1, '12323', '12323|202020', '2025-05-10 02:05:45', 'WEB', 0),
+(29, '681e51a2d9871', 1, 'abc', 'abc|bcd', '2025-05-10 02:05:45', 'WEB', 0),
+(30, '681e51a2d9871', 1, '12323', '12323|202020', '2025-05-10 02:05:45', 'WEB', 0),
+(31, '681e51a2d9871', 1, 'abc', 'abc|bcd', '2025-05-10 02:05:45', 'WEB', 0),
+(32, '681e51a2d9871', 1, '12323', '12323|202020', '2025-05-10 02:05:45', 'WEB', 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `promotions`
+-- Table structure for table `promotions`
 --
 
 CREATE TABLE `promotions` (
-  `id` int(11) NOT NULL,
-  `min` float NOT NULL DEFAULT 0,
-  `discount` float NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `min` float NOT NULL DEFAULT '0',
+  `discount` float NOT NULL DEFAULT '0',
   `create_gettime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `settings`
+-- Table structure for table `settings`
 --
 
 CREATE TABLE `settings` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `value` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `settings`
+-- Dumping data for table `settings`
 --
 
 INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (1, 'status_demo', '0'),
 (2, 'type_password', 'bcrypt'),
-(3, 'title', 'DEMO SHOPCLONE7'),
-(4, 'description', 'Hệ thống bán nguyên liệu ADS tự động, uy tín, giá rẻ...'),
+(3, 'title', 'SHOPTEST - MARKETING ACCOUNT STORE'),
+(4, 'description', 'ADS raw material sales system is automatic, reputable, cheap...'),
 (5, 'keywords', ''),
-(6, 'author', 'CMSNT.CO'),
+(6, 'author', 'SHOPTEST'),
 (7, 'timezone', 'Asia/Ho_Chi_Minh'),
 (8, 'email', 'admin@domain.com'),
 (9, 'status', '1'),
-(10, 'status_update', '1'),
+(10, 'status_update', '0'),
 (12, 'session_login', '10000000'),
 (13, 'javascript_header', '<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n<link href=\"https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap\" rel=\"stylesheet\">\r\n\r\n'),
 (14, 'javascript_footer', ''),
-(16, 'logo_light', 'assets/storage/images/logo_light_5MP.png'),
-(17, 'logo_dark', 'assets/storage/images/logo_dark_C0I.png'),
-(18, 'favicon', 'assets/storage/images/favicon_06U.png'),
+(16, 'logo_light', 'assets/storage/images/logo_light_K0I.png'),
+(17, 'logo_dark', 'assets/storage/images/logo_dark_GEX.png'),
+(18, 'favicon', 'assets/storage/images/favicon_Q0J.png'),
 (19, 'image', 'assets/storage/images/image_IYA.png'),
 (20, 'bg_login', 'assets/storage/images/bg_loginBYI.png'),
 (21, 'bg_register', 'assets/storage/images/bg_registerMOU.png'),
 (26, 'telegram_token', ''),
 (27, 'telegram_chat_id', ''),
 (30, 'prefix_autobank', 'NAPTIEN'),
-(35, 'bank_status', '1'),
-(36, 'bank_notice', '<ul>\r\n	<li>Nhập đ&uacute;ng nội dung chuyển tiền.</li>\r\n	<li>Cộng tiền trong v&agrave;i gi&acirc;y.</li>\r\n	<li>Li&ecirc;n hệ BQT nếu nhập sai nội dung chuyển.</li>\r\n</ul>\r\n'),
-(43, 'notice_home', '<h4><span style=\"color:#e74c3c\"><strong>Lưu &yacute;:</strong></span> H&atilde;y đảm bảo t&agrave;i khoản đăng nhập v&agrave; mật khẩu của bạn kh&ocirc;ng khớp với th&ocirc;ng tin đăng nhập tr&ecirc;n c&aacute;c website kh&aacute;c để tr&aacute;nh trường hợp chủ website kh&aacute;c sử dụng th&ocirc;ng tin của bạn để đăng nhập v&agrave;o website n&agrave;y!</h4>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"yes\" src=\"http://localhost/CMSNT.CO/SHOPCLONE7/public/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" />&nbsp;Thay đổi nội dung&nbsp;tại -&gt;&nbsp;<strong>Trang Quản Trị</strong>&nbsp;-&gt;&nbsp;<strong>C&agrave;i Đặt</strong>&nbsp;-&gt;&nbsp;<strong>Th&ocirc;ng b&aacute;o ngo&agrave;i trang chủ</strong></p>\r\n'),
-(44, 'font_family', 'font-family: \'Saira Semi Condensed\', sans-serif;'),
-(59, 'popup_status', '1'),
+(35, 'bank_status', '0'),
+(36, 'bank_notice', '<ul>\r\n	<li>Nhập đúng nội dung chuyển tiền.</li>\r\n	<li>Cộng tiền trong vài giây.</li>\r\n	<li>Liên hệ BQT nếu nhập sai nội dung chuyển.</li>\r\n</ul>\r\n'),
+(43, 'notice_home', '<h4><strong>⚠️ <span style=\"color:#e74c3c\">Lưu &yacute;:</span>&nbsp;H&atilde;y đảm bảo t&agrave;i khoản đăng nhập v&agrave; mật khẩu của bạn kh&ocirc;ng khớp với th&ocirc;ng tin đăng nhập tr&ecirc;n c&aacute;c website kh&aacute;c để tr&aacute;nh trường hợp chủ website kh&aacute;c sử dụng th&ocirc;ng tin của bạn để đăng nhập v&agrave;o website n&agrave;y!</strong></h4>\r\n\r\n<hr />\r\n<p><img alt=\"yes\" src=\"https://clonemkt.com/public/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" />&nbsp;Sau khi lấy nick đ&atilde; lấy nick&nbsp;xong, qu&yacute; kh&aacute;ch n&ecirc;n nhấn&nbsp;<strong>Delete</strong>&nbsp;đơn h&agrave;ng để đảm bảo an to&agrave;n nhất c&oacute; thể.</p>\r\n\r\n<p><img alt=\"yes\" src=\"https://clonemkt.com/public/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" />&nbsp;Đối với đơn h&agrave;ng mua PAGE, BM, vui l&ograve;ng nhắn tin về&nbsp;<strong><a href=\"https://t.me/ntthanhz\" target=\"_blank\">Telegram</a></strong>&nbsp;để hỗ trợ nhận.</p>\r\n\r\n<p><img alt=\"yes\" src=\"https://clonemkt.com/public/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" />&nbsp;Li&ecirc;n hệ hỗ trợ qu&yacute; kh&aacute;ch vui l&ograve;ng nhắn tin về&nbsp;<strong><a href=\"https://t.me/ntthanhz\" target=\"_blank\">Telegram</a></strong>.</p>\r\n\r\n<p>⚠️&nbsp;Hệ thống sẽ x&oacute;a đơn h&agrave;ng đ&atilde; b&aacute;n sau&nbsp;<strong>15 ng&agrave;y</strong>, qu&yacute; kh&aacute;ch lưu lại đơn h&agrave;ng đ&atilde; mua về m&aacute;y, tr&aacute;nh thất lạc.</p>\r\n\r\n<p>⚠️&nbsp;Chỉ bảo h&agrave;nh trường hợp sai pass v&agrave; die trước khi mua,&nbsp;kh&ocirc;ng bảo h&agrave;nh đăng nhập v&agrave; sử dụng. Vui l&ograve;ng li&ecirc;n hệ bảo h&agrave;nh trong 24 giờ t&iacute;nh từ l&uacute;c mua, qu&aacute; thời hạn hệ thống sẽ x&oacute;a đơn h&agrave;ng ngưng bảo h&agrave;nh.</p>\r\n\r\n<p>⚠️ Hiện tại h&agrave;ng No 2FA chưa bị checkpoint số điện thoại khuyến kh&iacute;ch d&ugrave;ng h&agrave;ng n&agrave;y.</p>\r\n\r\n<p>⚠️ Faceook đăng nhập tr&ecirc;n thiết bị mới sẽ kh&ocirc;ng thể đổi pass, th&ecirc;m-x&oacute;a email... cần ng&acirc;m random 15-30 ng&agrave;y.</p>\r\n\r\n<p>⚠️ T&agrave;i khoản mua chủ động đổi pass mail + mai kp, c&aacute;c trường hợp sai sau khi mua sẽ kh&ocirc;ng được bảo h&agrave;nh.</p>\r\n\r\n<p>⚠️ Mội số h&agrave;ng No 2FA khi đăng nhập kh&ocirc;ng c&oacute; t&ugrave;y chọn hotmail, vui l&ograve;ng đăng nhập cookie, lỗi do thiết bị, kh&ocirc;ng bảo h&agrave;nh.</p>\r\n\r\n<p>⚠️ Nếu kh&ocirc;ng c&oacute; đơn h&agrave;ng sau khi thanh to&aacute;n th&agrave;nh c&ocirc;ng, vui l&ograve;ng li&ecirc;n hệ Live Chat ngay để được hỗ trợ nhanh nhất&nbsp;(tối đa trong 48 giờ, nếu chậm&nbsp;hơn&nbsp;sẽ kh&ocirc;ng xử l&yacute; được).</p>\r\n\r\n<p><img alt=\"yes\" src=\"https://clonemkt.com/public/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" />&nbsp;Hỗ trợ ho&agrave;n lại tiền thừ nếu sản phẩm qu&yacute; kh&aacute;ch cần kh&ocirc;ng c&oacute; h&agrave;ng qu&aacute; 48h.</p>\r\n'),
+(44, 'font_family', 'font-family: \'Roboto\', sans-serif;'),
+(59, 'popup_status', '0'),
 (60, 'popup_noti', '<p><span style=\"font-size:14px\"><img alt=\"yes\" src=\"http://localhost/CMSNT.CO/SHOPCLONE7/public/ckeditor/plugins/smiley/images/thumbs_up.png\" style=\"height:23px; width:23px\" title=\"yes\" />&nbsp;Thay đổi th&ocirc;ng b&aacute;o nổi tại -&gt; <strong>Trang Quản Trị</strong> -&gt; <strong>C&agrave;i Đặt</strong> -&gt;&nbsp;<strong>Th&ocirc;ng b&aacute;o nổi ngo&agrave;i trang chủ</strong></span></p>\r\n\r\n<p><span style=\"font-size:14px\"><img alt=\"yes\" src=\"http://localhost/CMSNT.CO/SHOPCLONE7/public/ckeditor/plugins/smiley/images/thumbs_up.png\" style=\"height:23px; width:23px\" title=\"yes\" />&nbsp;Ẩn th&ocirc;ng b&aacute;o nổi tại -&gt; <strong>Trang Quản Trị</strong> -&gt; <strong>C&agrave;i Đặt</strong> -&gt;&nbsp;<strong>ON/OFF Th&ocirc;ng b&aacute;o nổi</strong></span></p>\r\n'),
 (64, 'license_key', 'aeeb422ae3477fbbec7636cb7e20523d'),
 (69, 'home_page', 'home'),
@@ -929,11 +1102,11 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (88, 'telegram_status', '0'),
 (89, 'smtp_status', '0'),
 (93, 'affiliate_ck', '5'),
-(94, 'affiliate_status', '1'),
+(94, 'affiliate_status', '0'),
 (95, 'affiliate_min', '10000'),
 (96, 'affiliate_banks', 'Vietcombank\r\nMBBank\r\nTechcombank'),
 (97, 'affiliate_note', '<p>Chia sẻ&nbsp;li&ecirc;n kết n&agrave;y l&ecirc;n mạng x&atilde; hội hoặc bạn b&egrave; của bạn.</p>\r\n'),
-(98, 'affiliate_chat_id_telegram', '1048444403'),
+(98, 'affiliate_chat_id_telegram', ''),
 (99, 'check_time_cron_cron2', '0'),
 (100, 'bank_min', '1000'),
 (101, 'bank_max', '1000000000'),
@@ -944,7 +1117,7 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (108, 'paypal_note', ''),
 (109, 'noti_recharge', '[{time}] <b>{username}</b> vừa nạp {amount} vào {method} thực nhận {price}.'),
 (110, 'noti_action', '[{time}] \r\n- <b>Username</b>: <code>{username}</code>\r\n- <b>Action</b>:  <code>{action}</code>\r\n- <b>IP</b>: <code>{ip}</code>'),
-(111, 'theme_color', '#007ea8'),
+(111, 'theme_color', '#2b5876'),
 (112, 'hotline', '0988888XXX'),
 (113, 'type_notification', 'telegram'),
 (114, 'perfectmoney_status', '1'),
@@ -953,9 +1126,9 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (117, 'perfectmoney_rate', '23000'),
 (118, 'perfectmoney_units', ''),
 (119, 'perfectmoney_notice', ''),
-(120, 'fanpage', 'https://www.facebook.com/cmsnt.co'),
+(120, 'fanpage', 'https://www.facebook.com/shoptest.co'),
 (121, 'address', '1Hd- 50, 010 Avenue, NY 90001 United States'),
-(122, 'toyyibpay_status', '1'),
+(122, 'toyyibpay_status', '0'),
 (123, 'toyyibpay_userSecretKey', ''),
 (124, 'toyyibpay_categoryCode', ''),
 (125, 'toyyibpay_min', '1'),
@@ -964,7 +1137,7 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (128, 'toyyibpay_notice', ''),
 (129, 'noti_affiliate_withdraw', '[{time}] \r\n- <b>Username</b>: <code>{username}</code>\r\n- <b>Action</b>:  <code>Tạo lệnh rút {amount} về ngân hàng {bank} | {account_number} | {account_name}</code>\r\n- <b>IP</b>: <code>{ip}</code>'),
 (130, 'check_time_cron_sending_email', '1715250984'),
-(131, 'squadco_status', '1'),
+(131, 'squadco_status', '0'),
 (132, 'squadco_Secret_Key', ''),
 (133, 'squadco_Public_Key', ''),
 (134, 'squadco_rate', '51'),
@@ -977,23 +1150,23 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (141, 'banner_singer', 'assets/storage/images/banner_singer08A.png'),
 (142, 'image_empty_state', 'assets/storage/images/image_empty_stateNPV.png'),
 (143, 'copyright_footer', 'Software By <a href=\"https://www.cmsnt.co/\">CMSNT.CO</a>'),
-(144, 'menu_category_right', '1'),
+(144, 'menu_category_right', '0'),
 (145, 'crypto_trial', '5'),
 (146, 'type_show_product', 'LIST'),
 (147, 'check_time_cron_bank', '0'),
 (148, 'google_analytics_status', '0'),
 (149, 'google_analytics_id', ''),
-(150, 'card_status', '1'),
+(150, 'card_status', '0'),
 (151, 'card_partner_id', ''),
 (152, 'card_partner_key', ''),
 (153, 'card_ck', '20'),
 (154, 'card_notice', ''),
-(155, 'api_status', '1'),
+(155, 'api_status', '0'),
 (156, 'time_cron_suppliers_shopclone6', '1734798034'),
 (157, 'time_cron_suppliers_api1', '1711653105'),
 (158, 'language_type', 'manual'),
 (159, 'gtranslate_script', '<div class=\"gtranslate_wrapper\"></div>\n<script>window.gtranslateSettings = {\"default_language\":\"vi\",\"languages\":[\"vi\",\"fr\",\"de\",\"it\",\"es\",\"zh-CN\",\"ar\",\"tr\",\"ru\",\"uk\",\"km\",\"th\",\"en\"],\"wrapper_selector\":\".gtranslate_wrapper\"}</script>\n<script src=\"https://cdn.gtranslate.net/widgets/latest/dropdown.js\" defer></script>'),
-(160, 'notice_top_left', 'Chào mừng bạn đến với website SHOPCLONE7'),
+(160, 'notice_top_left', 'Welcome to SHOPTEST website'),
 (161, 'page_contact', ''),
 (162, 'page_policy', '<p><strong>Ch&iacute;nh s&aacute;ch bảo mật</strong></p>\r\n\r\n<p>Ch&uacute;ng t&ocirc;i đặt rất nhiều gi&aacute; trị v&agrave;o việc bảo vệ th&ocirc;ng tin c&aacute; nh&acirc;n của bạn. Ch&iacute;nh s&aacute;ch quyền ri&ecirc;ng tư n&agrave;y giải th&iacute;ch c&aacute;ch ch&uacute;ng t&ocirc;i thu thập, sử dụng v&agrave; bảo vệ th&ocirc;ng tin c&aacute; nh&acirc;n của bạn khi bạn sử dụng dịch vụ của ch&uacute;ng t&ocirc;i.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Thu thập v&agrave; sử dụng th&ocirc;ng tin</strong></p>\r\n\r\n<p>Khi bạn sử dụng trang web của ch&uacute;ng t&ocirc;i hoặc tương t&aacute;c với c&aacute;c dịch vụ của ch&uacute;ng t&ocirc;i, ch&uacute;ng t&ocirc;i c&oacute; thể thu thập một số th&ocirc;ng tin c&aacute; nh&acirc;n nhất định từ bạn. Điều n&agrave;y c&oacute; thể bao gồm t&ecirc;n, địa chỉ email, số điện thoại, địa chỉ v&agrave; th&ocirc;ng tin kh&aacute;c m&agrave; bạn cung cấp khi đăng k&yacute; hoặc sử dụng dịch vụ của ch&uacute;ng t&ocirc;i.</p>\r\n\r\n<p>Ch&uacute;ng t&ocirc;i c&oacute; thể sử dụng th&ocirc;ng tin c&aacute; nh&acirc;n của bạn để:</p>\r\n\r\n<ul>\r\n	<li>Cung cấp v&agrave; duy tr&igrave; dịch vụ</li>\r\n	<li>Th&ocirc;ng b&aacute;o về những thay đổi đối với dịch vụ của ch&uacute;ng t&ocirc;i</li>\r\n	<li>Giải quyết vấn đề hoặc tranh chấp</li>\r\n	<li>Theo d&otilde;i v&agrave; ph&acirc;n t&iacute;ch việc sử dụng dịch vụ của ch&uacute;ng t&ocirc;i</li>\r\n	<li>N&acirc;ng cao trải nghiệm người d&ugrave;ng</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Bảo vệ</strong></p>\r\n\r\n<p>Ch&uacute;ng t&ocirc;i cam kết bảo vệ th&ocirc;ng tin c&aacute; nh&acirc;n của bạn v&agrave; c&oacute; c&aacute;c biện ph&aacute;p bảo mật th&iacute;ch hợp để đảm bảo th&ocirc;ng tin của bạn được giữ an to&agrave;n khi bạn truy cập trang web của ch&uacute;ng t&ocirc;i.</p>\r\n\r\n<p>Tuy nhi&ecirc;n, h&atilde;y nhớ rằng kh&ocirc;ng c&oacute; phương thức truyền th&ocirc;ng tin n&agrave;o qua internet hoặc phương tiện điện tử l&agrave; an to&agrave;n hoặc đ&aacute;ng tin cậy 100%. Mặc d&ugrave; ch&uacute;ng t&ocirc;i cố gắng bảo vệ th&ocirc;ng tin c&aacute; nh&acirc;n của bạn nhưng ch&uacute;ng t&ocirc;i kh&ocirc;ng thể đảm bảo hoặc đảm bảo t&iacute;nh bảo mật của bất kỳ th&ocirc;ng tin n&agrave;o bạn gửi cho ch&uacute;ng t&ocirc;i hoặc từ c&aacute;c dịch vụ của ch&uacute;ng t&ocirc;i. v&agrave; bạn phải tự chịu rủi ro n&agrave;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Li&ecirc;n kết đến c&aacute;c trang web kh&aacute;c</strong></p>\r\n\r\n<p>Trang web của ch&uacute;ng t&ocirc;i c&oacute; thể chứa c&aacute;c li&ecirc;n kết đến c&aacute;c trang web kh&aacute;c kh&ocirc;ng do ch&uacute;ng t&ocirc;i điều h&agrave;nh. Nếu bạn nhấp v&agrave;o li&ecirc;n kết của b&ecirc;n thứ ba, bạn sẽ được chuyển hướng đến trang web của b&ecirc;n thứ ba đ&oacute;. Ch&uacute;ng t&ocirc;i khuy&ecirc;n bạn n&ecirc;n xem lại Ch&iacute;nh s&aacute;ch quyền ri&ecirc;ng tư của mọi trang web bạn truy cập v&igrave; ch&uacute;ng t&ocirc;i kh&ocirc;ng c&oacute; quyền kiểm so&aacute;t hoặc chịu tr&aacute;ch nhiệm đối với c&aacute;c hoạt động hoặc nội dung về quyền ri&ecirc;ng tư của c&aacute;c trang web hoặc dịch vụ của b&ecirc;n thứ ba. .</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Thay đổi ch&iacute;nh s&aacute;ch quyền ri&ecirc;ng tư</strong></p>\r\n\r\n<p>Đ&ocirc;i khi, ch&uacute;ng t&ocirc;i c&oacute; thể cập nhật Ch&iacute;nh s&aacute;ch quyền ri&ecirc;ng tư n&agrave;y m&agrave; kh&ocirc;ng cần th&ocirc;ng b&aacute;o trước. Mọi thay đổi sẽ được đăng l&ecirc;n trang n&agrave;y v&agrave; được &aacute;p dụng ngay sau khi ch&uacute;ng được đăng. Bằng việc tiếp tục sử dụng dịch vụ của ch&uacute;ng t&ocirc;i sau khi những thay đổi n&agrave;y được đăng, bạn đồng &yacute; với những thay đổi đ&oacute;.</p>\r\n'),
 (163, 'page_faq', ''),
@@ -1007,25 +1180,25 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (171, 'time_cron_suppliers_api6', '1723709086'),
 (172, 'time_cron_checklive_clone', '1740738217'),
 (173, 'time_cron_checklive_hotmail', '1711615443'),
-(174, 'product_hide_outstock', '0'),
+(174, 'product_hide_outstock', '1'),
 (175, 'time_cron_suppliers_api14', '1710930652'),
 (176, 'max_show_product_home', '6'),
 (177, 'email_temp_content_buy_order', '<p><span style=\"font-size:16px\">Cảm ơn bạn đ&atilde; mua h&agrave;ng tại {title}, dưới đ&acirc;y l&agrave; th&ocirc;ng tin đơn h&agrave;ng của bạn. Nếu kh&ocirc;ng phải bạn vui l&ograve;ng thay đổi th&ocirc;ng tin t&agrave;i khoản ngay hoặc li&ecirc;n hệ ngay cho ch&uacute;ng t&ocirc;i để hỗ trợ kiểm tra an to&agrave;n cho qu&yacute; kh&aacute;ch.</span></p>\r\n\r\n<ul>\r\n	<li><span style=\"font-size:14px\">M&atilde; đơn h&agrave;ng: <strong>#{trans_id}</strong></span></li>\r\n	<li><span style=\"font-size:14px\">Sản phẩm:<strong> {product}</strong></span></li>\r\n	<li><span style=\"font-size:14px\">Số lượng: <span style=\"color:#3498db\"><strong>{amount}</strong></span></span></li>\r\n	<li><span style=\"font-size:14px\">Thanh to&aacute;n: <span style=\"color:#e74c3c\"><strong>{pay}</strong></span></span></li>\r\n</ul>\r\n\r\n<p><span style=\"font-size:14px\">Để đảm bảo an to&agrave;n, ch&uacute;ng t&ocirc;i khuy&ecirc;n bạn n&ecirc;n x&oacute;a lịch sử đơn h&agrave;ng tr&ecirc;n hệ thống sau khi nhận được Email n&agrave;y.</span></p>\r\n\r\n<p><em>Thiết bị: {device} - IP: {ip}</em></p>\r\n'),
 (178, 'email_temp_subject_buy_order', 'Chi tiết đơn hàng {product} - {title}'),
 (179, 'time_cron_suppliers_shopclone7', '1736523184'),
 (180, 'time_cron_suppliers_api18', '1711615441'),
-(181, 'avatar', 'assets/storage/images/avatar4N0.png'),
+(181, 'avatar', 'assets/storage/images/avatarP7U.png'),
 (182, 'check_time_cron_momo', '1711213245'),
 (183, 'momo_number', '0947838128'),
 (184, 'momo_name', 'WEB DEMO VUI LÒNG KHÔNG NẠP'),
 (185, 'momo_token', ''),
 (186, 'momo_notice', ''),
-(187, 'momo_status', '1'),
+(187, 'momo_status', '0'),
 (188, 'script_footer_admin', ''),
 (189, 'time_cron_suppliers_api19', '1711555019'),
 (190, 'cot_so_du_ben_phai', '1'),
 (191, 'time_cron_suppliers_api4', '1711863683'),
-(192, 'status_giao_dich_gan_day', '1'),
+(192, 'status_giao_dich_gan_day', '0'),
 (193, 'content_gd_mua_gan_day', '<b style=\"color: green;\">...{username}</b> mua <b style=\"color: red;\">{amount}</b> <b>{product_name}</b> với giá <b style=\"color:blue;\">{price}</b>'),
 (194, 'content_gd_nap_tien_gan_day', '<b style=\"color: green;\">...{username}</b> thực hiện nạp <b style=\"color:blue;\">{amount}</b> bằng <b style=\"color:red;\">{method}</b> thực nhận <b style=\"color:blue;\">{received}</b>'),
 (195, 'status_tao_gd_ao', '0'),
@@ -1037,17 +1210,17 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (201, 'method_nap_ao', 'ACB\r\nMB\r\nUSDT\r\nPayPal'),
 (202, 'tao_gd_ao_sp_het_hang', '1'),
 (203, 'check_time_cron_cron', '1715933184'),
-(204, 'blog_status', '1'),
+(204, 'blog_status', '0'),
 (205, 'cong_tien_nguoi_ban', '0'),
 (206, 'noti_buy_product', '[{time}] <b>{username}</b> vừa mua {amount} tài khoản {product} với giá {pay} - #{trans_id}'),
 (207, 'check_time_cron_task', '1726908868'),
 (208, 'thoi_gian_mua_cach_nhau', '3'),
 (209, 'max_register_ip', '5'),
 (210, 'time_cron_suppliers_api20', '1715439606'),
-(211, 'status_menu_tools', '1'),
+(211, 'status_menu_tools', '0'),
 (212, 'debug_auto_bank', '0'),
 (213, 'time_cron_suppliers_api9', '1721537978'),
-(214, 'debug_api_suppliers', '1'),
+(214, 'debug_api_suppliers', '0'),
 (215, 'order_by_product_home', '1'),
 (216, 'token_webhook_web2m', ''),
 (217, 'time_cron_suppliers_api21', '0'),
@@ -1060,11 +1233,11 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (224, 'widget_zalo1_sdt', ''),
 (225, 'widget_phone1_status', '0'),
 (226, 'widget_phone1_sdt', ''),
-(227, 'flutterwave_status', '1'),
+(227, 'flutterwave_status', '0'),
 (228, 'flutterwave_rate', '16'),
 (229, 'flutterwave_currency_code', 'NGN'),
-(230, 'flutterwave_publicKey', NULL),
-(231, 'flutterwave_secretKey', NULL),
+(230, 'flutterwave_publicKey', ''),
+(231, 'flutterwave_secretKey', ''),
 (232, 'flutterwave_notice', ''),
 (233, 'limit_block_ip_login', '5'),
 (234, 'limit_block_client_login', '10'),
@@ -1074,7 +1247,7 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (238, 'isPurchaseIpVerified', '0'),
 (239, 'isPurchaseDeviceVerified', '0'),
 (240, 'footer_card', ''),
-(241, 'notice_orders', NULL),
+(241, 'notice_orders', ''),
 (242, 'widget_fbzalo2_status', '0'),
 (243, 'widget_fbzalo2_zalo', ''),
 (244, 'widget_fbzalo2_fb', ''),
@@ -1118,42 +1291,42 @@ INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `suppliers`
+-- Table structure for table `suppliers`
 --
 
 CREATE TABLE `suppliers` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `type` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `domain` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `username` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `api_key` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `token` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `coupon` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `price` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `discount` float NOT NULL DEFAULT 0,
-  `update_name` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sync_category` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'OFF',
-  `update_price` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `roundMoney` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ON',
-  `status` int(11) NOT NULL DEFAULT 1,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `type` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `domain` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `username` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `password` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `api_key` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `coupon` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `price` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `discount` float NOT NULL DEFAULT '0',
+  `update_name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `sync_category` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'OFF',
+  `update_price` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `roundMoney` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'ON',
+  `status` int NOT NULL DEFAULT '1',
   `create_gettime` datetime NOT NULL,
   `update_gettime` datetime NOT NULL,
-  `check_string_api` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ON'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `check_string_api` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'ON'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `telegram_logs`
+-- Table structure for table `telegram_logs`
 --
 
 CREATE TABLE `telegram_logs` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `command` varchar(100) DEFAULT NULL,
-  `params` text DEFAULT NULL,
+  `params` text,
   `type` varchar(50) DEFAULT NULL,
   `time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1161,18 +1334,18 @@ CREATE TABLE `telegram_logs` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `translate`
+-- Table structure for table `translate`
 --
 
 CREATE TABLE `translate` (
-  `id` int(11) NOT NULL,
-  `lang_id` int(11) NOT NULL DEFAULT 0,
-  `name` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` longtext COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `lang_id` int NOT NULL DEFAULT '0',
+  `name` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `value` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `translate`
+-- Dumping data for table `translate`
 --
 
 INSERT INTO `translate` (`id`, `lang_id`, `name`, `value`) VALUES
@@ -1794,319 +1967,7 @@ INSERT INTO `translate` (`id`, `lang_id`, `name`, `value`) VALUES
 (626, 2, 'Chia sẻ liên kết sản phẩm dưới đây cho bạn bè của bạn, bạn sẽ nhận được hoa hồng khi bạn bè của bạn mua hàng thông qua liên kết phía dưới.', 'Share the product link below to your friends, you will receive commission when your friends purchase through the link below.'),
 (627, 1, 'Tất cả sản phẩm', 'Tất cả sản phẩm'),
 (628, 2, 'Tất cả sản phẩm', 'All products'),
-(629, 19, 'Vui lòng nhập username', 'กรุณากรอกชื่อผู้ใช้'),
-(630, 19, 'Vui lòng nhập mật khẩu', 'กรุณากรอกรหัสผ่าน'),
-(631, 19, 'Vui lòng xác minh Captcha', 'กรุณาตรวจสอบ Captcha'),
-(632, 19, 'Thông tin đăng nhập không chính xác', 'ข้อมูลการเข้าสู่ระบบไม่ถูกต้อง'),
-(633, 19, 'Vui lòng nhập địa chỉ Email', 'กรุณากรอกที่อยู่อีเมล์'),
-(634, 19, 'Vui lòng nhập lại mật khẩu', 'กรุณากรอกรหัสผ่านอีกครั้ง'),
-(635, 19, 'Xác minh mật khẩu không chính xác', 'ตรวจสอบรหัสผ่านไม่ถูกต้อง'),
-(636, 19, 'Tên đăng nhập đã tồn tại trong hệ thống', 'ชื่อเข้าระบบมีอยู่แล้วในระบบ'),
-(637, 19, 'Địa chỉ email đã tồn tại trong hệ thống', 'ที่อยู่อีเมลมีอยู่ในระบบแล้ว'),
-(638, 19, 'IP của bạn đã đạt đến giới hạn tạo tài khoản cho phép', 'IP ของคุณถึงขีดจำกัดการสร้างบัญชีที่อนุญาตแล้ว'),
-(639, 19, 'Đăng ký thành công!', 'ลงทะเบียนสำเร็จ!'),
-(640, 19, 'Tạo tài khoản không thành công, vui lòng thử lại', 'การสร้างบัญชีล้มเหลว กรุณาลองอีกครั้ง'),
-(641, 19, 'Vui lòng đăng nhập', 'กรุณาเข้าสู่ระบบ'),
-(642, 19, 'Lưu thành công', 'บันทึกสำเร็จแล้ว'),
-(643, 19, 'Lưu thất bại', 'การบันทึกล้มเหลว'),
-(644, 19, 'Vui lòng nhập mật khẩu hiện tại', 'กรุณากรอกรหัสผ่านปัจจุบัน'),
-(645, 19, 'Vui lòng nhập mật khẩu mới', 'กรุณากรอกรหัสผ่านใหม่'),
-(646, 19, 'Mật khẩu mới quá ngắn', 'รหัสผ่านใหม่สั้นเกินไป'),
-(647, 19, 'Xác nhận mật khẩu không chính xác', 'ยืนยันรหัสผ่านไม่ถูกต้อง'),
-(648, 19, 'Mật khẩu hiện tại không đúng', 'รหัสผ่านปัจจุบันไม่ถูกต้อง'),
-(649, 19, 'Địa chỉ Email này không tồn tại trong hệ thống', 'ที่อยู่อีเมลนี้ไม่มีอยู่ในระบบ'),
-(650, 19, 'Vui lòng thử lại trong ít phút', 'โปรดลองอีกครั้งในอีกไม่กี่นาที'),
-(651, 19, 'Nếu bạn yêu cầu đặt lại mật khẩu, vui lòng nhấp vào liên kết bên dưới để xác minh.', 'หากคุณต้องการรีเซ็ตรหัสผ่าน โปรดคลิกลิงก์ด้านล่างเพื่อยืนยัน'),
-(652, 19, 'Nếu không phải là bạn, vui lòng liên hệ ngay với Quản trị viên của bạn để được hỗ trợ về bảo mật.', 'หากคุณไม่ใช่ โปรดติดต่อผู้ดูแลระบบของคุณทันทีเพื่อขอความช่วยเหลือด้านความปลอดภัย'),
-(653, 19, 'Xác nhận tìm mật khẩu website', 'ยืนยันการค้นหารหัสผ่านเว็บไซต์'),
-(654, 19, 'Xác nhận khôi phục mật khẩu', 'ยืนยันการกู้คืนรหัสผ่าน'),
-(655, 19, 'Vui lòng kiểm tra Email của bạn để hoàn tất quá trình đặt lại mật khẩu', 'กรุณาตรวจสอบอีเมลของคุณเพื่อเสร็จสิ้นกระบวนการรีเซ็ตรหัสผ่าน'),
-(656, 19, 'Có lỗi hệ thống, vui lòng liên hệ Developer', 'มีข้อผิดพลาดของระบบกรุณาติดต่อผู้พัฒนา'),
-(657, 19, 'Liên kết không tồn tại', 'ลิงค์ไม่ได้อยู่'),
-(658, 19, 'Thay đổi mật khẩu thành công', 'เปลี่ยนรหัสผ่านสำเร็จแล้ว'),
-(659, 19, 'Thay đổi mật khẩu thất bại', 'การเปลี่ยนรหัสผ่านล้มเหลว'),
-(660, 19, 'Hồ sơ của bạn', 'โปรไฟล์ของคุณ'),
-(661, 19, 'Tên đăng nhập', 'ชื่อผู้ใช้'),
-(662, 19, 'Địa chỉ Email', 'ที่อยู่อีเมล์'),
-(663, 19, 'Số điện thoại', 'เบอร์โทรศัพท์'),
-(664, 19, 'Họ và Tên', 'ชื่อ-นามสกุล'),
-(665, 19, 'Địa chỉ IP', 'ที่อยู่ IP'),
-(666, 19, 'Thiết bị', 'อุปกรณ์'),
-(667, 19, 'Đăng ký vào lúc', 'สมัครสมาชิกได้ที่'),
-(668, 19, 'Đăng nhập gần nhất', 'การเข้าสู่ระบบครั้งสุดท้าย'),
-(669, 19, 'Chỉnh sửa thông tin', 'แก้ไขข้อมูล'),
-(670, 19, 'Thay đổi mật khẩu', 'เปลี่ยนรหัสผ่าน'),
-(671, 19, 'Thay đổi mật khẩu đăng nhập của bạn là một cách dễ dàng để giữ an toàn cho tài khoản của bạn.', 'การเปลี่ยนรหัสผ่านการเข้าสู่ระบบเป็นวิธีง่ายๆ ในการรักษาบัญชีของคุณให้ปลอดภัย'),
-(672, 19, 'Mật khẩu hiện tại', 'รหัสผ่านปัจจุบัน'),
-(673, 19, 'Mật khẩu mới', 'รหัสผ่านใหม่'),
-(674, 19, 'Nhập lại mật khẩu mới', 'กรอกรหัสผ่านใหม่อีกครั้ง'),
-(675, 19, 'Cập Nhật', 'อัปเดต'),
-(676, 19, 'Đăng Xuất', 'ออกจากระบบ'),
-(677, 19, 'Bạn có chắc không?', 'คุณแน่ใจมั้ย?'),
-(678, 19, 'Bạn sẽ bị đăng xuất khỏi tài khoản khi nhấn Đồng Ý', 'คุณจะออกจากระบบบัญชีของคุณเมื่อคุณคลิกตกลง'),
-(679, 19, 'Đồng ý', 'เห็นด้วย'),
-(680, 19, 'Huỷ bỏ', 'ยกเลิก'),
-(681, 19, 'Đăng Nhập', 'เข้าสู่ระบบ'),
-(682, 19, 'Vui Lòng Đăng Nhập Để Tiếp Tục', 'กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ'),
-(683, 19, 'Quên mật khẩu', 'ลืมรหัสผ่าน'),
-(684, 19, 'Bạn quên mật khẩu?', 'ลืมรหัสผ่านใช่ไหม?'),
-(685, 19, 'Vui lòng nhập thông tin vào ô dưới đây để xác minh', 'กรุณากรอกข้อมูลลงในช่องด้านล่างเพื่อยืนยัน'),
-(686, 19, 'Xác minh', 'ตรวจสอบ'),
-(687, 19, 'Bạn đã có tài khoản?', 'มีบัญชีอยู่แล้วใช่ไหม?'),
-(688, 19, 'Ghi nhớ tôi', 'จำฉันไว้'),
-(689, 19, 'Quên mật khẩu?', 'ลืมรหัสผ่าน?'),
-(690, 19, 'Bạn chưa có tài khoản?', 'ยังไม่มีบัญชีใช่ไหม?'),
-(691, 19, 'Đăng Ký Ngay', 'สมัครสมาชิกตอนนี้'),
-(692, 19, 'Nạp tiền', 'เงินฝาก'),
-(693, 19, 'Ngân hàng', 'ธนาคาร'),
-(694, 19, 'Ví của tôi', 'กระเป๋าสตางค์ของฉัน'),
-(695, 19, 'Số dư hiện tại', 'ยอดคงเหลือปัจจุบัน'),
-(696, 19, 'Tổng tiền nạp', 'ยอดฝากรวม'),
-(697, 19, 'Số dư đã sử dụng', 'ยอดคงเหลือที่ใช้แล้ว'),
-(698, 19, 'THANH TOÁN', 'จ่าย'),
-(699, 19, 'Lưu ý nạp tiền', 'หมายเหตุการฝากเงิน'),
-(700, 19, 'Lịch sử nạp tiền', 'ประวัติการฝากเงิน'),
-(701, 19, 'Số tài khoản:', 'หมายเลขบัญชี :'),
-(702, 19, 'Chủ tài khoản:', 'ผู้ถือบัญชี:'),
-(703, 19, 'Ngân hàng:', 'ธนาคาร:'),
-(704, 19, 'Nội dung chuyển khoản:', 'โอนเนื้อหา:'),
-(705, 19, 'Mã giao dịch', 'รหัสธุรกรรม'),
-(706, 19, 'Nội dung', 'เนื้อหา'),
-(707, 19, 'Số tiền nạp', 'จำนวนเงินมัดจำ'),
-(708, 19, 'Thực nhận', 'การตระหนักรู้'),
-(709, 19, 'Thời gian', 'เวลา'),
-(710, 19, 'Trạng thái', 'สถานะ'),
-(711, 19, 'Đã thanh toán', 'จ่าย'),
-(712, 19, 'Tất cả', 'ทั้งหมด'),
-(713, 19, 'Hôm nay', 'วันนี้'),
-(714, 19, 'Tuần này', 'สัปดาห์นี้'),
-(715, 19, 'Tháng này', 'เดือนนี้'),
-(716, 19, 'Đã thanh toán:', 'จ่าย:'),
-(717, 19, 'Thực nhận:', 'ใบเสร็จจริง:'),
-(718, 19, 'Thao tác', 'การดำเนินการ'),
-(719, 19, 'Nhật ký hoạt động', 'บันทึกกิจกรรม'),
-(720, 19, 'Tìm kiếm', 'ค้นหา'),
-(721, 19, 'Bỏ lọc', 'ยกเลิกตัวกรอง'),
-(722, 19, 'Hiển thị', 'แสดง'),
-(723, 19, 'Ẩn', 'ซ่อน'),
-(724, 19, 'Biến động số dư', 'ความผันผวนของความสมดุล'),
-(725, 19, 'Số dư ban đầu', 'ยอดคงเหลือเริ่มต้น'),
-(726, 19, 'Số dư thay đổi', 'การเปลี่ยนแปลงสมดุล'),
-(727, 19, 'Lý do', 'เหตุผล'),
-(728, 19, 'Chọn thời gian cần tìm', 'เลือกเวลาที่ต้องการค้นหา'),
-(729, 19, 'Hiển thị thêm', 'แสดงเพิ่มเติม'),
-(730, 19, 'Ẩn bớt', 'ซ่อน'),
-(731, 19, 'Nội dung chuyển khoản', 'ถ่ายโอนเนื้อหา'),
-(732, 19, 'Đăng nhập bằng Google', 'ลงชื่อเข้าใช้ด้วย Google'),
-(733, 19, 'Đăng nhập bằng Facebook', 'เข้าสู่ระบบด้วย Facebook'),
-(734, 19, 'Đăng ký tài khoản', 'ลงทะเบียนบัญชีผู้ใช้'),
-(735, 19, 'Tài khoản đăng nhập', 'เข้าสู่ระบบบัญชี'),
-(736, 19, 'Mật khẩu', 'รหัสผ่าน'),
-(737, 19, 'Nhập lại mật khẩu', 'กรอกรหัสผ่านอีกครั้ง'),
-(738, 19, 'Đăng Ký', 'ลงทะเบียน'),
-(739, 19, 'Vui lòng nhập thông tin đăng ký', 'กรุณากรอกข้อมูลลงทะเบียน'),
-(740, 19, 'Vui lòng nhập thông tin đăng nhập', 'กรุณากรอกข้อมูลการเข้าสู่ระบบของคุณ'),
-(741, 19, 'Thông tin cá nhân', 'ข้อมูลส่วนตัว'),
-(742, 19, 'Cấu hình nạp tiền Crypto', 'การกำหนดค่าการฝากเงิน Crypto'),
-(743, 19, 'All Time', 'ตลอดเวลา'),
-(744, 19, 'Thống kê thanh toán tháng', 'สถิติการชำระเงินรายเดือน'),
-(745, 19, 'Lịch sử nạp tiền Crypto', 'ประวัติการฝากเงินคริปโต'),
-(746, 19, 'Thống kê', 'สถิติ'),
-(747, 19, 'Cấu hình', 'การกำหนดค่า'),
-(748, 19, 'Nạp tối đa', 'โหลดสูงสุด'),
-(749, 19, 'Nạp tối thiểu', 'เงินฝากขั้นต่ำ'),
-(750, 19, 'Nạp tiền bằng Crypto', 'ฝากเงินด้วยคริปโต'),
-(751, 19, 'Lưu ý', 'บันทึก'),
-(752, 19, 'Lịch sử nạp Crypto', 'ประวัติการฝากเงินคริปโต'),
-(753, 19, 'Số lượng', 'ปริมาณ'),
-(754, 19, 'Thời gian tạo', 'เวลาการสร้าง'),
-(755, 19, 'Xem thêm', 'ดูเพิ่มเติม'),
-(756, 19, 'The minimum deposit amount is:', 'จำนวนเงินฝากขั้นต่ำคือ:'),
-(757, 19, 'Số tiền gửi tối đa là:', 'จำนวนเงินฝากสูงสุดคือ:'),
-(758, 19, 'Số tiền gửi tối thiểu là:', 'จำนวนเงินฝากขั้นต่ำคือ:'),
-(759, 19, 'Chức năng này đang được bảo trì', 'ฟังก์ชั่นนี้อยู่ระหว่างการบำรุงรักษา'),
-(760, 19, 'Không thể tạo hóa đơn do lỗi API, vui lòng thử lại sau', 'ไม่สามารถสร้างใบแจ้งหนี้ได้เนื่องจากข้อผิดพลาดของ API โปรดลองอีกครั้งในภายหลัง'),
-(761, 19, 'Tạo hoá đơn nạp tiền thành công', 'สร้างใบแจ้งหนี้เติมเงินสำเร็จแล้ว'),
-(762, 19, 'Nạp tiền bằng PayPal', 'ฝากเงินด้วย PayPal'),
-(763, 19, 'Lịch sử nạp PayPal', 'ประวัติการฝากเงิน PayPal'),
-(764, 19, 'Số tiền gửi', 'จำนวนเงินมัดจำ'),
-(765, 19, 'Vui lòng nhập số tiền cần nạp', 'กรุณากรอกจำนวนเงินที่ต้องการฝาก'),
-(766, 19, 'Mặc định', 'ค่าเริ่มต้น'),
-(767, 19, 'Phổ biến', 'เป็นที่นิยม'),
-(768, 19, 'Tìm kiếm bài viết', 'ค้นหาบทความ'),
-(769, 19, 'Bài viết phổ biến', 'กระทู้ยอดนิยม'),
-(770, 19, 'Liên kết giới thiệu của bạn', 'ลิงค์อ้างอิงของคุณ'),
-(771, 19, 'Đã sao chép vào bộ nhớ tạm', 'คัดลอกไปยังคลิปบอร์ดแล้ว'),
-(772, 19, 'Số tài khoản', 'หมายเลขบัญชี'),
-(773, 19, 'Tên chủ tài khoản', 'ชื่อเจ้าของบัญชี'),
-(774, 19, 'Số tiền cần rút', 'จำนวนเงินที่ต้องการถอน'),
-(775, 19, 'Rút số dư hoa hồng', 'ถอนเงินค่าคอมมิชชั่นคงเหลือ'),
-(776, 19, 'Lịch sử rút tiền', 'ประวัติการถอนเงิน'),
-(777, 19, 'Rút tiền', 'ถอนเงิน'),
-(778, 19, 'Lịch sử', 'ประวัติศาสตร์'),
-(779, 19, 'Thao tác quá nhanh, vui lòng chờ', 'การดำเนินการรวดเร็วเกินไป กรุณารอสักครู่'),
-(780, 19, 'Vui lòng chọn ngân hàng cần rút', 'กรุณาเลือกธนาคารที่คุณต้องการถอนเงิน'),
-(781, 19, 'Vui lòng nhập số tài khoản cần rút', 'กรุณากรอกหมายเลขบัญชีที่ต้องการถอน'),
-(782, 19, 'Vui lòng nhập tên chủ tài khoản', 'กรุณากรอกชื่อเจ้าของบัญชี'),
-(783, 19, 'Vui lòng nhập số tiền cần rút', 'กรุณากรอกจำนวนเงินที่ต้องการถอน'),
-(784, 19, 'Số tiền rút tối thiểu phải là', 'จำนวนเงินถอนขั้นต่ำจะต้องเป็น'),
-(785, 19, 'Số dư hoa hồng khả dụng của bạn không đủ', 'ยอดคอมมิชชั่นคงเหลือของคุณไม่เพียงพอ'),
-(786, 19, 'Gian lận khi rút số dư hoa hồng', 'การฉ้อโกงในการถอนเงินค่าคอมมิชชั่นคงเหลือ'),
-(787, 19, 'Tài khoản của bạn đã bị khóa vì gian lận', 'บัญชีของคุณถูกล็อคเนื่องจากการฉ้อโกง'),
-(788, 19, 'Yêu cầu rút tiền được tạo thành công, vui lòng đợi ADMIN xử lý', 'สร้างคำขอถอนเงินสำเร็จแล้ว กรุณารอให้ผู้ดูแลระบบดำเนินการ'),
-(789, 19, 'Số tiền rút', 'จำนวนเงินที่ถอนออก'),
-(790, 19, 'Thông kê của bạn', 'สถิติของคุณ'),
-(791, 19, 'Số tiền hoa hồng khả dụng', 'จำนวนคอมมิชชั่นที่สามารถใช้ได้'),
-(792, 19, 'Tổng số tiền hoa hồng đã nhận', 'รวมค่าคอมมิชชั่นที่ได้รับ'),
-(793, 19, 'Số lần nhấp vào liên kết', 'จำนวนการคลิกลิงก์'),
-(794, 19, 'Lịch sử hoa hồng', 'ประวัติความเป็นมาของดอกกุหลาบ'),
-(795, 19, 'Hoa hồng ban đầu', 'ค่าคอมมิชชั่นเบื้องต้น'),
-(796, 19, 'Hoa hồng thay đổi', 'การเปลี่ยนแปลงค่าคอมมิชชั่น'),
-(797, 19, 'Hoa hồng hiện tại', 'ค่าคอมมิชชั่นปัจจุบัน'),
-(798, 19, 'Vui lòng nhập số lượng cần mua', 'กรุณากรอกจำนวนที่ต้องการซื้อ'),
-(799, 19, 'Tổng tiền thanh toán:', 'รวมชำระเงิน:'),
-(800, 19, 'Số tiền giảm:', 'จำนวนส่วนลด:'),
-(801, 19, 'Thành tiền:', 'ยอดรวม :'),
-(802, 19, 'Mã giảm giá:', 'โค้ดส่วนลด:'),
-(803, 19, 'Nhập mã giảm giá nếu có', 'กรอกรหัสส่วนลดหากมี'),
-(804, 19, 'THÔNG TIN MUA HÀNG', 'ข้อมูลการซื้อ'),
-(805, 19, 'Số lượng cần mua:', 'จำนวนที่ต้องการซื้อ:'),
-(806, 19, 'Chia sẻ:', 'แบ่งปัน:'),
-(807, 19, 'Mua Ngay', 'ซื้อเลย'),
-(808, 19, 'Kho hàng:', 'คลังสินค้า:'),
-(809, 19, 'Đã bán:', 'ขายแล้ว:'),
-(810, 19, 'Yêu Thích', 'ที่ชื่นชอบ'),
-(811, 19, 'Bỏ Thích', 'ชอบ'),
-(812, 19, 'Danh sách sản phẩm yêu thích', 'รายการสินค้าที่ชื่นชอบ'),
-(813, 19, 'Sản phẩm', 'ผลิตภัณฑ์'),
-(814, 19, 'Kho hàng', 'คลังสินค้า'),
-(815, 19, 'Giá', 'ราคา'),
-(816, 19, 'Mua', 'อันดับแรก'),
-(817, 19, 'Xem', 'ดู'),
-(818, 19, 'Xóa', 'ลบ'),
-(819, 19, 'Hết hàng', 'สินค้าหมด'),
-(820, 19, 'Thêm vào mục yêu thích', 'เพิ่มไปยังรายการโปรด'),
-(821, 19, 'Đã thêm vào mục yêu thích', 'เพิ่มไปยังรายการโปรด'),
-(822, 19, 'Xóa đơn hàng', 'ลบคำสั่งซื้อ'),
-(823, 19, 'Xóa đơn hàng đã chọn khỏi lịch sử của bạn', 'ลบคำสั่งซื้อที่เลือกจากประวัติของคุณ'),
-(824, 19, 'Mã đơn hàng', 'รหัสการสั่งซื้อ'),
-(825, 19, 'Xem chi tiết', 'ดูรายละเอียดเพิ่มเติม'),
-(826, 19, 'Tải về máy', 'ดาวน์โหลด'),
-(827, 19, 'Xóa khỏi lịch sử', 'ลบออกจากประวัติ'),
-(828, 19, 'Liên hệ', 'ติดต่อ'),
-(829, 19, 'Chính sách', 'นโยบาย'),
-(830, 19, 'Tài liệu API', 'เอกสารประกอบ API'),
-(831, 19, 'Trang chủ', 'บ้าน'),
-(832, 19, 'Liên kết', 'ลิงค์'),
-(833, 19, 'Câu hỏi thường gặp', 'คำถามที่พบบ่อย'),
-(834, 19, 'Liên hệ chúng tôi', 'ติดต่อเรา'),
-(835, 19, 'Sản phẩm:', 'ผลิตภัณฑ์:'),
-(836, 19, 'Số lượng mua:', 'ปริมาณการซื้อ:'),
-(837, 19, 'Thanh toán:', 'จ่าย:'),
-(838, 19, 'Mã đơn hàng:', 'รหัสสั่งซื้อ :'),
-(839, 19, 'Chi tiết đơn hàng', 'รายละเอียดการสั่งซื้อ'),
-(840, 19, 'Tài khoản', 'บัญชี'),
-(841, 19, 'Lưu các tài khoản đã chọn vào tệp .txt', 'บันทึกบัญชีที่เลือกลงในไฟล์ .txt'),
-(842, 19, 'Sao chép các tài khoản đã chọn', 'คัดลอกบัญชีที่เลือก'),
-(843, 19, 'Chỉ sao chép UID các tài khoản đã chọn', 'คัดลอกเฉพาะ UID ของบัญชีที่เลือก'),
-(844, 19, 'Số dư của tôi:', 'ความสมดุลของฉัน:'),
-(845, 19, 'Khuyến mãi', 'การส่งเสริม'),
-(846, 19, 'Số tiền nạp lớn hơn hoặc bằng', 'จำนวนเงินฝากมากกว่าหรือเท่ากับ'),
-(847, 19, 'Khuyến mãi thêm', 'โปรโมชั่นเพิ่มเติม'),
-(848, 19, 'Thông tin chi tiết khách hàng', 'รายละเอียดลูกค้า'),
-(849, 19, 'Chia sẻ liên kết này lên mạng xã hội hoặc bạn bè của bạn.', 'แบ่งปันลิงก์นี้บนเครือข่ายสังคมหรือกับเพื่อนของคุณ'),
-(850, 19, 'Tài liệu tích hợp API', 'เอกสารประกอบการรวม API'),
-(851, 19, 'Lấy thông tin tài khoản', 'รับข้อมูลบัญชี'),
-(852, 19, 'Lấy danh sách chuyên mục và sản phẩm', 'รับรายการหมวดหมู่และสินค้า'),
-(853, 19, 'Mua hàng', 'ซื้อ'),
-(854, 19, 'ID sản phẩm cần mua', 'รหัสสินค้าที่ต้องการซื้อ'),
-(855, 19, 'Số lượng cần mua', 'จำนวนที่ต้องการซื้อ'),
-(856, 19, 'Mã giảm giá nếu có', 'โค้ดส่วนลดหากมี'),
-(857, 19, 'Bảo mật', 'ความปลอดภัย'),
-(858, 19, 'Bảo mật tài khoản', 'ความปลอดภัยของบัญชี'),
-(859, 19, 'Xác minh đăng nhập bằng', 'ยืนยันการเข้าสู่ระบบด้วย'),
-(860, 19, 'Gửi thông báo về mail khi đăng nhập thành công:', 'ส่งการแจ้งเตือนทางอีเมล์เมื่อเข้าสู่ระบบสำเร็จ:'),
-(861, 19, 'Đúng Trình Duyệt và IP mua hàng mới có thể xem đơn hàng:', 'ต้องใช้เบราว์เซอร์และที่อยู่ IP ที่ถูกต้องเพื่อดูคำสั่งซื้อ:'),
-(862, 19, '- Sử dụng điện thoại tải App Google Authenticator sau đó quét mã QR để nhận mã xác minh.', '- ใช้โทรศัพท์ของคุณดาวน์โหลดแอป Google Authenticator จากนั้นสแกนรหัส QR เพื่อรับรหัสยืนยัน'),
-(863, 19, '- Mã QR sẽ được thay đổi khi bạn tắt xác minh.', '- รหัส QR จะเปลี่ยนแปลงเมื่อคุณปิดการยืนยัน'),
-(864, 19, '- Nếu bật Xác minh đăng nhập bằng OTP Mail thì không bật Google Authenticator và ngược lại.', '- หากคุณเปิดใช้งานการยืนยันการเข้าสู่ระบบด้วย OTP Mail อย่าเปิดใช้งาน Google Authenticator และในทางกลับกัน'),
-(865, 19, 'Lưu', 'บันทึก'),
-(866, 19, 'Nhập mã xác minh để lưu', 'กรอกรหัสยืนยันเพื่อบันทึก'),
-(867, 19, 'Sản phẩm liên quan đến từ khóa', 'สินค้าที่เกี่ยวข้องกับคีย์เวิร์ด'),
-(868, 19, 'trong số', 'ท่ามกลาง'),
-(869, 19, 'Quay lại', 'กลับมาอีกครั้ง'),
-(870, 19, 'Tải về đơn hàng', 'ดาวน์โหลดคำสั่ง'),
-(871, 19, 'Hệ thống sẽ tải về đơn hàng khi bạn nhấn đồng ý', 'ระบบจะดาวน์โหลดคำสั่งซื้อเมื่อคุณกดยอมรับ'),
-(872, 19, 'Hệ thống sẽ xóa đơn hàng khỏi lịch sử của bạn khi bạn nhấn đồng ý', 'ระบบจะลบคำสั่งซื้อออกจากประวัติของคุณเมื่อคุณคลิกยอมรับ'),
-(873, 19, 'Đóng', 'ปิด'),
-(874, 19, 'Xuất tất cả tài khoản ra tệp .txt', 'ส่งออกบัญชีทั้งหมดไปยังไฟล์ .txt'),
-(875, 19, 'Xóa đơn hàng này khỏi lịch sử của bạn', 'ลบคำสั่งนี้ออกจากประวัติของคุณ'),
-(876, 19, 'Thành công !', 'ความสำเร็จ !'),
-(877, 19, 'Xem chi tiết đơn hàng', 'ดูรายละเอียดการสั่งซื้อ'),
-(878, 19, 'Mua thêm', 'ซื้อเพิ่ม'),
-(879, 19, 'Tạo đơn hàng thành công !', 'สร้างคำสั่งซื้อสำเร็จแล้ว!'),
-(880, 19, 'Đang xử lý...', 'กำลังประมวลผล...'),
-(881, 19, 'tài khoản giảm', 'การลดบัญชี'),
-(882, 19, 'Chi tiết', 'รายละเอียด'),
-(883, 19, 'Tích hợp API', 'การรวม API'),
-(884, 19, 'Lấy chi tiết sản phẩm', 'รับรายละเอียดผลิตภัณฑ์'),
-(885, 19, 'Ghi chú cá nhân', 'บันทึกส่วนตัว'),
-(886, 19, 'ngày trước', 'วันก่อน'),
-(887, 19, 'tiếng trước', 'ก่อนหน้า'),
-(888, 19, 'phút trước', 'นาทีที่แล้ว'),
-(889, 19, 'giây trước', 'วินาทีที่แล้ว'),
-(890, 19, 'Hôm qua', 'เมื่อวาน'),
-(891, 19, 'tuần trước', 'สัปดาห์ที่แล้ว'),
-(892, 19, 'tháng trước', 'เดือนที่แล้ว'),
-(893, 19, 'năm trước', 'เมื่อปีที่แล้ว'),
-(894, 19, 'Đơn hàng đã bị xóa', 'คำสั่งถูกลบแล้ว'),
-(895, 19, 'Bạn có chắc không', 'คุณแน่ใจมั้ย?'),
-(896, 19, 'Hệ thống sẽ xóa', 'ระบบจะทำการลบ');
-INSERT INTO `translate` (`id`, `lang_id`, `name`, `value`) VALUES
-(897, 19, 'đơn hàng bạn chọn khi nhấn Đồng Ý', 'ลำดับที่คุณเลือกเมื่อคุณคลิกตกลง'),
-(898, 19, 'Vui lòng chọn ít nhất một đơn hàng.', 'กรุณาเลือกอย่างน้อยหนึ่งคำสั่งซื้อ'),
-(899, 19, 'Thất bại!', 'ความล้มเหลว!'),
-(900, 19, 'Thành công!', 'ความสำเร็จ!'),
-(901, 19, 'Xóa đơn hàng thành công', 'ลบคำสั่งซื้อสำเร็จแล้ว'),
-(902, 19, 'Miễn phí', 'ฟรีไม่มีค่าใช้จ่าย'),
-(903, 19, 'Lấy mã 2FA', 'รับรหัส 2FA'),
-(904, 19, 'Bạn đang xem', 'คุณกำลังดู'),
-(905, 19, 'Nhập danh sách UID', 'นำเข้ารายการ UID'),
-(906, 19, 'Mỗi dòng 1 UID', '1 UID ต่อบรรทัด'),
-(907, 19, 'Tài khoản Live', 'บัญชีออนไลน์'),
-(908, 19, 'Tài khoản Die', 'บัญชีของฉัน'),
-(909, 19, 'Giảm giá', 'การลดราคา'),
-(910, 19, 'Tỷ lệ hoa hồng', 'อัตราคอมมิชชั่น'),
-(911, 19, 'Thành viên đã giới thiệu', 'สมาชิกที่ถูกอ้างถึง'),
-(912, 19, 'Không có dữ liệu', 'ไม่มีข้อมูล'),
-(913, 19, 'Khách hàng', 'ลูกค้า'),
-(914, 19, 'Ngày đăng ký', 'วันที่ลงทะเบียน'),
-(915, 19, 'Hoa hồng', 'ดอกกุหลาบ'),
-(916, 19, 'Mật khẩu mạnh', 'รหัสผ่านที่แข็งแกร่ง'),
-(917, 19, 'Mật khẩu trung bình', 'รหัสผ่านเฉลี่ย'),
-(918, 19, 'Mật khẩu rất yếu', 'รหัสผ่านอ่อนแอมาก'),
-(919, 19, 'Vui lòng nhập mã xác minh 2FA', 'กรุณากรอกรหัสยืนยัน 2FA'),
-(920, 19, 'Mã xác minh không chính xác', 'รหัสตรวจสอบไม่ถูกต้อง'),
-(921, 19, 'Bật xác thực Google Authenticator', 'เปิดใช้งาน Google Authenticator'),
-(922, 19, 'Tắt xác thực Google Authenticator', 'ปิดใช้งานการตรวจสอบสิทธิ์ของ Google Authenticator'),
-(923, 19, 'Vui lòng đăng nhập để sử dụng tính năng này', 'กรุณาเข้าสู่ระบบเพื่อใช้ฟีเจอร์นี้'),
-(924, 19, 'Chọn phương thức nạp tiền', 'เลือกวิธีการฝากเงิน'),
-(925, 19, 'Không hiển thị lại trong 2 giờ', 'ไม่แสดงผลอีกเป็นเวลา 2 ชั่วโมง'),
-(926, 19, 'Thông báo', 'การแจ้งเตือน'),
-(927, 19, 'Tìm kiếm sản phẩm...', 'ค้นหาผลิตภัณฑ์...'),
-(928, 19, 'Chat hỗ trợ', 'การสนับสนุนการแชท'),
-(929, 19, 'Chat ngay', 'แชทตอนนี้'),
-(930, 19, 'ĐƠN HÀNG GẦN ĐÂY', 'คำสั่งซื้อล่าสุด'),
-(931, 19, 'NẠP TIỀN GẦN ĐÂY', 'เงินฝากล่าสุด'),
-(932, 19, 'Chức năng này chưa được cấu hình, vui lòng liên hệ Admin', 'ยังไม่ได้กำหนดค่าฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบ'),
-(933, 19, 'Số dư không đủ, vui lòng nạp thêm', 'เงินคงเหลือไม่พอ กรุณาเติมเงิน'),
-(934, 19, 'Công cụ Check Live UID Facebook', 'เครื่องมือตรวจสอบ UID ของ Facebook Live'),
-(935, 19, 'Tiếp thị liên kết', 'การตลาดแบบพันธมิตร'),
-(936, 19, 'Liên kết sản phẩm', 'ลิงค์ผลิตภัณฑ์'),
-(937, 19, 'Chia sẻ liên kết sản phẩm dưới đây cho bạn bè của bạn, bạn sẽ nhận được hoa hồng khi bạn bè của bạn mua hàng thông qua liên kết phía dưới.', 'แชร์ลิงก์ผลิตภัณฑ์ด้านล่างนี้ให้เพื่อนของคุณ คุณจะได้รับคอมมิชชั่นเมื่อเพื่อนของคุณซื้อผ่านลิงก์ด้านล่าง'),
-(938, 19, 'Tất cả sản phẩm', 'สินค้าทั้งหมด'),
 (939, 1, 'Sản phẩm yêu thích', 'Sản phẩm yêu thích'),
-(940, 19, 'Sản phẩm yêu thích', 'สินค้าที่ชื่นชอบ'),
 (941, 2, 'Sản phẩm yêu thích', 'Favorites'),
 (942, 20, 'Vui lòng nhập username', '请输入用户名'),
 (943, 20, 'Vui lòng nhập mật khẩu', '请输入密码'),
@@ -2418,119 +2279,130 @@ INSERT INTO `translate` (`id`, `lang_id`, `name`, `value`) VALUES
 (1249, 20, 'Liên kết sản phẩm', '产品链接'),
 (1250, 20, 'Chia sẻ liên kết sản phẩm dưới đây cho bạn bè của bạn, bạn sẽ nhận được hoa hồng khi bạn bè của bạn mua hàng thông qua liên kết phía dưới.', '分享以下产品链接给您的朋友，当您的朋友通过以下链接购买时，您将获得佣金。'),
 (1251, 20, 'Tất cả sản phẩm', '所有产品'),
-(1252, 20, 'Sản phẩm yêu thích', '最喜欢的产品');
+(1252, 20, 'Sản phẩm yêu thích', '最喜欢的产品'),
+(1253, 1, 'Chưa thanh toán:', 'Chưa thanh toán:'),
+(1254, 20, 'Chưa thanh toán:', 'Chưa thanh toán:'),
+(1256, 1, 'Chưa thanh toán', 'Chưa thanh toán'),
+(1257, 20, 'Chưa thanh toán', 'Chưa thanh toán');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fullname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `admin` int(11) NOT NULL DEFAULT 0,
-  `ctv` int(11) NOT NULL DEFAULT 0,
-  `banned` int(11) NOT NULL DEFAULT 0,
-  `reason_banned` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `fullname` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `admin` int NOT NULL DEFAULT '0',
+  `ctv` int NOT NULL DEFAULT '0',
+  `banned` int NOT NULL DEFAULT '0',
+  `reason_banned` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
   `create_date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
-  `time_session` int(11) DEFAULT 0,
-  `time_request` int(11) NOT NULL DEFAULT 0,
-  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `token_2fa` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `token_forgot_password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `time_forgot_password` int(11) NOT NULL DEFAULT 0,
-  `money` float NOT NULL DEFAULT 0,
-  `total_money` float NOT NULL DEFAULT 0,
-  `debit` float NOT NULL DEFAULT 0,
-  `gender` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Male',
-  `device` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `avatar` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status_2fa` int(11) NOT NULL DEFAULT 0,
-  `SecretKey_2fa` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `limit_2fa` int(11) NOT NULL DEFAULT 0,
-  `discount` float NOT NULL DEFAULT 0,
-  `trial` int(11) NOT NULL DEFAULT 0,
-  `ref_id` int(11) NOT NULL DEFAULT 0,
-  `ref_ck` float NOT NULL DEFAULT 0,
-  `ref_click` int(11) NOT NULL DEFAULT 0,
-  `ref_amount` float NOT NULL DEFAULT 0,
-  `ref_price` float NOT NULL DEFAULT 0,
-  `ref_total_price` float NOT NULL DEFAULT 0,
-  `telegram_chat_id` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `api_key` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `login_attempts` int(11) NOT NULL DEFAULT 0,
-  `status_otp_mail` int(11) NOT NULL DEFAULT 0,
-  `otp_mail` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `token_otp_mail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `limit_otp_mail` int(11) NOT NULL DEFAULT 0,
-  `status_noti_login_to_mail` int(11) NOT NULL DEFAULT 0,
-  `status_view_order` int(11) NOT NULL DEFAULT 0,
-  `utm_source` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'web'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `time_session` int DEFAULT '0',
+  `time_request` int NOT NULL DEFAULT '0',
+  `ip` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `token_2fa` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `token_forgot_password` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `time_forgot_password` int NOT NULL DEFAULT '0',
+  `money` float NOT NULL DEFAULT '0',
+  `total_money` float NOT NULL DEFAULT '0',
+  `debit` float NOT NULL DEFAULT '0',
+  `gender` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'Male',
+  `device` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `avatar` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `status_2fa` int NOT NULL DEFAULT '0',
+  `SecretKey_2fa` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `limit_2fa` int NOT NULL DEFAULT '0',
+  `discount` float NOT NULL DEFAULT '0',
+  `trial` int NOT NULL DEFAULT '0',
+  `ref_id` int NOT NULL DEFAULT '0',
+  `ref_ck` float NOT NULL DEFAULT '0',
+  `ref_click` int NOT NULL DEFAULT '0',
+  `ref_amount` float NOT NULL DEFAULT '0',
+  `ref_price` float NOT NULL DEFAULT '0',
+  `ref_total_price` float NOT NULL DEFAULT '0',
+  `telegram_chat_id` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `api_key` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `login_attempts` int NOT NULL DEFAULT '0',
+  `status_otp_mail` int NOT NULL DEFAULT '0',
+  `otp_mail` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `token_otp_mail` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `limit_otp_mail` int NOT NULL DEFAULT '0',
+  `status_noti_login_to_mail` int NOT NULL DEFAULT '0',
+  `status_view_order` int NOT NULL DEFAULT '0',
+  `utm_source` varchar(55) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'web'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `fullname`, `phone`, `admin`, `ctv`, `banned`, `reason_banned`, `create_date`, `update_date`, `time_session`, `time_request`, `ip`, `token`, `remember_token`, `token_2fa`, `token_forgot_password`, `time_forgot_password`, `money`, `total_money`, `debit`, `gender`, `device`, `avatar`, `status_2fa`, `SecretKey_2fa`, `limit_2fa`, `discount`, `trial`, `ref_id`, `ref_ck`, `ref_click`, `ref_amount`, `ref_price`, `ref_total_price`, `telegram_chat_id`, `api_key`, `login_attempts`, `status_otp_mail`, `otp_mail`, `token_otp_mail`, `limit_otp_mail`, `status_noti_login_to_mail`, `status_view_order`, `utm_source`) VALUES
+(1, 'test001', '$2y$10$/VjGkB9x/PgBLe1dfjk0OedMav4iUvQ3u9vW9x4VR4DypHTNeWimu', 'test001@gmail.com', NULL, NULL, 1, 0, 0, NULL, '2025-05-10 01:23:12', '2025-05-10 01:23:12', 1746931172, 1746927953, '127.0.0.1', 'Mfxg3EvnSC9WdOeZtsyYRH50N8hDuPTI7BwJLKl2zVbjkUoqQ1mrapcG4AX6i1746814992e8aa9481a1c7375a4538a9ac82bba2e7', NULL, '', NULL, 0, 99999900, 100000000, 0, 'Male', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', NULL, 0, 'BOMEXYXNTBTEXGJ7', 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 'ee9386915bfe5dbec988e607776f5642', 1, 0, '', '', 0, 0, 0, 'web');
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `admin_request_logs`
+-- Indexes for table `admin_request_logs`
 --
 ALTER TABLE `admin_request_logs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `admin_role`
+-- Indexes for table `admin_role`
 --
 ALTER TABLE `admin_role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `aff_log`
+-- Indexes for table `aff_log`
 --
 ALTER TABLE `aff_log`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `aff_withdraw`
+-- Indexes for table `aff_withdraw`
 --
 ALTER TABLE `aff_withdraw`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `automations`
+-- Indexes for table `automations`
 --
 ALTER TABLE `automations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `banks`
+-- Indexes for table `banks`
 --
 ALTER TABLE `banks`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `block_ip`
+-- Indexes for table `block_ip`
 --
 ALTER TABLE `block_ip`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `cards`
+-- Indexes for table `cards`
 --
 ALTER TABLE `cards`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `trans_id` (`trans_id`);
 
 --
--- Chỉ mục cho bảng `categories`
+-- Indexes for table `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
@@ -2538,163 +2410,163 @@ ALTER TABLE `categories`
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Chỉ mục cho bảng `coupons`
+-- Indexes for table `coupons`
 --
 ALTER TABLE `coupons`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `coupon_used`
+-- Indexes for table `coupon_used`
 --
 ALTER TABLE `coupon_used`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `currencies`
+-- Indexes for table `currencies`
 --
 ALTER TABLE `currencies`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `deposit_log`
+-- Indexes for table `deposit_log`
 --
 ALTER TABLE `deposit_log`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `dongtien`
+-- Indexes for table `dongtien`
 --
 ALTER TABLE `dongtien`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `transid` (`transid`);
 
 --
--- Chỉ mục cho bảng `email_campaigns`
+-- Indexes for table `email_campaigns`
 --
 ALTER TABLE `email_campaigns`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `email_sending`
+-- Indexes for table `email_sending`
 --
 ALTER TABLE `email_sending`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `failed_attempts`
+-- Indexes for table `failed_attempts`
 --
 ALTER TABLE `failed_attempts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `favorites`
+-- Indexes for table `favorites`
 --
 ALTER TABLE `favorites`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `languages`
+-- Indexes for table `languages`
 --
 ALTER TABLE `languages`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `logs`
+-- Indexes for table `logs`
 --
 ALTER TABLE `logs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `log_bank_auto`
+-- Indexes for table `log_bank_auto`
 --
 ALTER TABLE `log_bank_auto`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `tid` (`tid`);
 
 --
--- Chỉ mục cho bảng `log_ref`
+-- Indexes for table `log_ref`
 --
 ALTER TABLE `log_ref`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `menu`
+-- Indexes for table `menu`
 --
 ALTER TABLE `menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `momo`
+-- Indexes for table `momo`
 --
 ALTER TABLE `momo`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD UNIQUE KEY `tranId` (`tranId`);
 
 --
--- Chỉ mục cho bảng `order_log`
+-- Indexes for table `order_log`
 --
 ALTER TABLE `order_log`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `payment_bank`
+-- Indexes for table `payment_bank`
 --
 ALTER TABLE `payment_bank`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD UNIQUE KEY `tid` (`tid`);
 
 --
--- Chỉ mục cho bảng `payment_crypto`
+-- Indexes for table `payment_crypto`
 --
 ALTER TABLE `payment_crypto`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `payment_flutterwave`
+-- Indexes for table `payment_flutterwave`
 --
 ALTER TABLE `payment_flutterwave`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `payment_manual`
+-- Indexes for table `payment_manual`
 --
 ALTER TABLE `payment_manual`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `payment_momo`
+-- Indexes for table `payment_momo`
 --
 ALTER TABLE `payment_momo`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `tid` (`tid`);
 
 --
--- Chỉ mục cho bảng `payment_paypal`
+-- Indexes for table `payment_paypal`
 --
 ALTER TABLE `payment_paypal`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `payment_pm`
+-- Indexes for table `payment_pm`
 --
 ALTER TABLE `payment_pm`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `payment_squadco`
+-- Indexes for table `payment_squadco`
 --
 ALTER TABLE `payment_squadco`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `payment_thesieure`
+-- Indexes for table `payment_thesieure`
 --
 ALTER TABLE `payment_thesieure`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `tid` (`tid`);
 
 --
--- Chỉ mục cho bảng `payment_toyyibpay`
+-- Indexes for table `payment_toyyibpay`
 --
 ALTER TABLE `payment_toyyibpay`
   ADD PRIMARY KEY (`id`),
@@ -2702,95 +2574,95 @@ ALTER TABLE `payment_toyyibpay`
   ADD UNIQUE KEY `BillCode` (`BillCode`);
 
 --
--- Chỉ mục cho bảng `payment_xipay`
+-- Indexes for table `payment_xipay`
 --
 ALTER TABLE `payment_xipay`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `posts`
+-- Indexes for table `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`);
 
 --
--- Chỉ mục cho bảng `post_category`
+-- Indexes for table `post_category`
 --
 ALTER TABLE `post_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `products`
+-- Indexes for table `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `product_die`
+-- Indexes for table `product_die`
 --
 ALTER TABLE `product_die`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uid` (`uid`);
 
 --
--- Chỉ mục cho bảng `product_discount`
+-- Indexes for table `product_discount`
 --
 ALTER TABLE `product_discount`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `product_order`
+-- Indexes for table `product_order`
 --
 ALTER TABLE `product_order`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `trans_id` (`trans_id`);
 
 --
--- Chỉ mục cho bảng `product_sold`
+-- Indexes for table `product_sold`
 --
 ALTER TABLE `product_sold`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `product_stock`
+-- Indexes for table `product_stock`
 --
 ALTER TABLE `product_stock`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `promotions`
+-- Indexes for table `promotions`
 --
 ALTER TABLE `promotions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `settings`
+-- Indexes for table `settings`
 --
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Chỉ mục cho bảng `suppliers`
+-- Indexes for table `suppliers`
 --
 ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `telegram_logs`
+-- Indexes for table `telegram_logs`
 --
 ALTER TABLE `telegram_logs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `translate`
+-- Indexes for table `translate`
 --
 ALTER TABLE `translate`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -2799,308 +2671,308 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `admin_request_logs`
+-- AUTO_INCREMENT for table `admin_request_logs`
 --
 ALTER TABLE `admin_request_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `admin_role`
+-- AUTO_INCREMENT for table `admin_role`
 --
 ALTER TABLE `admin_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `aff_log`
+-- AUTO_INCREMENT for table `aff_log`
 --
 ALTER TABLE `aff_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `aff_withdraw`
+-- AUTO_INCREMENT for table `aff_withdraw`
 --
 ALTER TABLE `aff_withdraw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `automations`
+-- AUTO_INCREMENT for table `automations`
 --
 ALTER TABLE `automations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `banks`
+-- AUTO_INCREMENT for table `banks`
 --
 ALTER TABLE `banks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `block_ip`
+-- AUTO_INCREMENT for table `block_ip`
 --
 ALTER TABLE `block_ip`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `cards`
+-- AUTO_INCREMENT for table `cards`
 --
 ALTER TABLE `cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `categories`
+-- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `coupons`
+-- AUTO_INCREMENT for table `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `coupon_used`
+-- AUTO_INCREMENT for table `coupon_used`
 --
 ALTER TABLE `coupon_used`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `currencies`
+-- AUTO_INCREMENT for table `currencies`
 --
 ALTER TABLE `currencies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `deposit_log`
+-- AUTO_INCREMENT for table `deposit_log`
 --
 ALTER TABLE `deposit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `dongtien`
+-- AUTO_INCREMENT for table `dongtien`
 --
 ALTER TABLE `dongtien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `email_campaigns`
+-- AUTO_INCREMENT for table `email_campaigns`
 --
 ALTER TABLE `email_campaigns`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `email_sending`
+-- AUTO_INCREMENT for table `email_sending`
 --
 ALTER TABLE `email_sending`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `failed_attempts`
+-- AUTO_INCREMENT for table `failed_attempts`
 --
 ALTER TABLE `failed_attempts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `favorites`
+-- AUTO_INCREMENT for table `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `languages`
+-- AUTO_INCREMENT for table `languages`
 --
 ALTER TABLE `languages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT cho bảng `logs`
+-- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
--- AUTO_INCREMENT cho bảng `log_bank_auto`
+-- AUTO_INCREMENT for table `log_bank_auto`
 --
 ALTER TABLE `log_bank_auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `log_ref`
+-- AUTO_INCREMENT for table `log_ref`
 --
 ALTER TABLE `log_ref`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `menu`
+-- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `momo`
+-- AUTO_INCREMENT for table `momo`
 --
 ALTER TABLE `momo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `order_log`
+-- AUTO_INCREMENT for table `order_log`
 --
 ALTER TABLE `order_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `payment_bank`
+-- AUTO_INCREMENT for table `payment_bank`
 --
 ALTER TABLE `payment_bank`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_crypto`
+-- AUTO_INCREMENT for table `payment_crypto`
 --
 ALTER TABLE `payment_crypto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_flutterwave`
+-- AUTO_INCREMENT for table `payment_flutterwave`
 --
 ALTER TABLE `payment_flutterwave`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_manual`
+-- AUTO_INCREMENT for table `payment_manual`
 --
 ALTER TABLE `payment_manual`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `payment_momo`
+-- AUTO_INCREMENT for table `payment_momo`
 --
 ALTER TABLE `payment_momo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_paypal`
+-- AUTO_INCREMENT for table `payment_paypal`
 --
 ALTER TABLE `payment_paypal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_pm`
+-- AUTO_INCREMENT for table `payment_pm`
 --
 ALTER TABLE `payment_pm`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_squadco`
+-- AUTO_INCREMENT for table `payment_squadco`
 --
 ALTER TABLE `payment_squadco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_thesieure`
+-- AUTO_INCREMENT for table `payment_thesieure`
 --
 ALTER TABLE `payment_thesieure`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_toyyibpay`
+-- AUTO_INCREMENT for table `payment_toyyibpay`
 --
 ALTER TABLE `payment_toyyibpay`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `payment_xipay`
+-- AUTO_INCREMENT for table `payment_xipay`
 --
 ALTER TABLE `payment_xipay`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `posts`
+-- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `post_category`
+-- AUTO_INCREMENT for table `post_category`
 --
 ALTER TABLE `post_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `products`
+-- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `product_die`
+-- AUTO_INCREMENT for table `product_die`
 --
 ALTER TABLE `product_die`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `product_discount`
+-- AUTO_INCREMENT for table `product_discount`
 --
 ALTER TABLE `product_discount`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `product_order`
+-- AUTO_INCREMENT for table `product_order`
 --
 ALTER TABLE `product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `product_sold`
+-- AUTO_INCREMENT for table `product_sold`
 --
 ALTER TABLE `product_sold`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `product_stock`
+-- AUTO_INCREMENT for table `product_stock`
 --
 ALTER TABLE `product_stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT cho bảng `promotions`
+-- AUTO_INCREMENT for table `promotions`
 --
 ALTER TABLE `promotions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `settings`
+-- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
 
 --
--- AUTO_INCREMENT cho bảng `suppliers`
+-- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `telegram_logs`
+-- AUTO_INCREMENT for table `telegram_logs`
 --
 ALTER TABLE `telegram_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `translate`
+-- AUTO_INCREMENT for table `translate`
 --
 ALTER TABLE `translate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1253;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1260;
 
 --
--- AUTO_INCREMENT cho bảng `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

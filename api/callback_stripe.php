@@ -10,56 +10,42 @@ require_once __DIR__ . "/../libs/database/users.php";
 $CMSNT = new DB();
 $Mobile_Detect = new Mobile_Detect();
 
-// Get the webhook secret from your Stripe dashboard
-$endpoint_secret = $CMSNT->site("stripe_webhook_secret");
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $payload = @file_get_contents("php://input");
+    $sig_header = $_SERVER["HTTP_STRIPE_SIGNATURE"];
+    $webhook_secret = $CMSNT->site("stripe_webhook_secret");
 
-$payload = @file_get_contents('php://input');
-$sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
-$event = null;
+    try {
+        $event = \Stripe\Webhook::constructEvent(
+            $payload, $sig_header, $webhook_secret
+        );
+    } catch(\UnexpectedValueException $e) {
+        http_response_code(400);
+        exit();
+    } catch(\Stripe\Exception\SignatureVerificationException $e) {
+        http_response_code(400);
+        exit();
+    }
 
-try {
-    $event = \Stripe\Webhook::constructEvent(
-        $payload, $sig_header, $endpoint_secret
-    );
-} catch(\UnexpectedValueException $e) {
-    // Invalid payload
-    http_response_code(400);
-    exit();
-} catch(\Stripe\Exception\SignatureVerificationException $e) {
-    // Invalid signature
-    http_response_code(400);
-    exit();
-}
-
-// Handle the event
-switch ($event->type) {
-    case 'payment_intent.succeeded':
-        $paymentIntent = $event->data->object;
-        
-        // Get payment details
-        $id = check_string($paymentIntent->id);
-        $amount = check_string($paymentIntent->amount / 100); // Convert from cents
-        $currency = check_string($paymentIntent->currency);
-        $txRef = check_string($paymentIntent->metadata->tx_ref);
-        
-        // Calculate price based on rate
+    if ($event->type == "payment_intent.succeeded") {
+        $payment_intent = $event->data->object;
+        $tx_ref = $payment_intent->metadata->tx_ref;
+        $amount = $payment_intent->amount / 100; // Convert from cents to dollars
+        $currency = strtoupper($payment_intent->currency);
         $price = $amount * $CMSNT->site("stripe_rate");
-        
-        // Check if payment exists and is pending
-        if($row = $CMSNT->get_row(" SELECT * FROM `payment_stripe` WHERE `tx_ref` = '" . $txRef . "' AND `currency` = '" . $currency . "' AND `status` = 'pending' ")) {
+
+        if ($row = $CMSNT->get_row(" SELECT * FROM `payment_stripe` WHERE `tx_ref` = '" . $tx_ref . "' AND `currency` = '" . $currency . "' AND `status` = 'pending' ")) {
             $user = new users();
-            $isCong = $user->AddCredits($row["user_id"], $price, __("Recharge Stripe") . " #" . $id, "TOPUP_Stripe_" . $txRef);
+            $isCong = $user->AddCredits($row["user_id"], $price, __("Recharge Stripe") . " #" . $payment_intent->id, "TOPUP_Stripe_" . $tx_ref);
             
-            if($isCong) {
-                // Update payment status
+            if ($isCong) {
                 $CMSNT->update("payment_stripe", [
                     "status" => "success",
                     "price" => $price,
                     "update_gettime" => gettime(),
                     "amount" => $amount
                 ], " `id` = '" . $row["id"] . "' AND `status` = 'pending' ");
-                
-                // Add to deposit log
+
                 $CMSNT->insert("deposit_log", [
                     "user_id" => $row["user_id"],
                     "method" => "Stripe",
@@ -68,8 +54,7 @@ switch ($event->type) {
                     "create_time" => time(),
                     "is_virtual" => 0
                 ]);
-                
-                // Send notification
+
                 $my_text = $CMSNT->site("noti_recharge");
                 $my_text = str_replace("{domain}", $_SERVER["SERVER_NAME"], $my_text);
                 $my_text = str_replace("{username}", getRowRealtime("users", $row["user_id"], "username"), $my_text);
@@ -80,12 +65,10 @@ switch ($event->type) {
                 sendMessAdmin($my_text);
             }
         }
-        break;
-    default:
-        // Unexpected event type
-        http_response_code(400);
-        exit();
+    }
+
+    http_response_code(200);
+    exit();
 }
 
-http_response_code(200);
 ?> 

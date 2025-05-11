@@ -59,7 +59,7 @@ echo __("Email");
 echo "</td>\n                                                                <td>\n                                                                    <input type=\"text\" name=\"email\"\n                                                                        value=\"";
 echo $CMSNT->site("email");
 echo "\"\n                                                                        class=\"form-control\">\n                                                                </td>\n                                                            </tr>\n                                                            <tr>\n                                                                <td>";
-echo __("Hotline");
+echo __("Telegram");
 echo "</td>\n                                                                <td>\n                                                                    <input type=\"text\" name=\"hotline\"\n                                                                        value=\"";
 echo $CMSNT->site("hotline");
 echo "\"\n                                                                        class=\"form-control\">\n                                                                </td>\n                                                            </tr>\n                                                            <tr>\n                                                                <td>";

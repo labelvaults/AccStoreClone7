@@ -86,6 +86,19 @@ insert_options("show_btn_category_home", 0);
 $CMSNT->query(" ALTER TABLE `suppliers` ADD `sync_category` VARCHAR(55) NOT NULL DEFAULT 'OFF' AFTER `update_name` ");
 $CMSNT->query(" ALTER TABLE `categories` ADD `supplier_id` INT(11) NOT NULL DEFAULT '0' AFTER `id_api` ");
 insert_options("time_cron_suppliers_api24", 0);
+
+// Add Stripe payment table
+$CMSNT->query(" CREATE TABLE `payment_stripe` ( `id` INT NOT NULL AUTO_INCREMENT , `user_id` INT(11) NOT NULL DEFAULT '0' , `tx_ref` VARCHAR(55) NULL DEFAULT NULL , `amount` FLOAT NOT NULL DEFAULT '0' , `currency` TEXT NULL DEFAULT NULL , `create_gettime` DATETIME NOT NULL , `update_gettime` DATETIME NOT NULL , `status` VARCHAR(55) NOT NULL DEFAULT 'pending' , `price` FLOAT NOT NULL DEFAULT '0' , PRIMARY KEY (`id`)) ");
+
+// Add Stripe settings
+insert_options("stripe_status", 0);
+insert_options("stripe_rate", 1);
+insert_options("stripe_currency_code", "USD");
+insert_options("stripe_public_key", "");
+insert_options("stripe_secret_key", "");
+insert_options("stripe_webhook_secret", "");
+insert_options("stripe_notice", "");
+
 function insert_options($name, $value)
 {
     global $CMSNT;
