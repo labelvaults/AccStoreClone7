@@ -21,7 +21,7 @@ if(isset($_POST["SaveSettings"])) {
     }
     if(!checkPermission($getUser["admin"], "edit_recharge")) {
         exit("<script type=\"text/javascript\">if(!alert(\"Bạn không có quyền sử dụng tính năng này\")){window.history.back();}</script>");
-    }
+    }   
     $Mobile_Detect = new Mobile_Detect();
     $CMSNT->insert("logs", ["user_id" => $getUser["id"], "ip" => myip(), "device" => $Mobile_Detect->getUserAgent(), "createdate" => gettime(), "action" => __("Cấu hình nạp tiền Stripe")]);
     foreach ($_POST as $key => $value) {

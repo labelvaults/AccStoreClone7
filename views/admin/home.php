@@ -16,20 +16,8 @@ if(checkPermission($getUser["admin"], "view_license")) {
     echo " Version: <strong style=\"color:blue;\">";
     echo $config["version"];
     echo "</strong></h5>\n            ";
-    if($CMSNT->site("status_update") == 1) {
-        echo "            <small>Hệ thống sẽ tự động cập nhật phiên bản mới khi bạn truy cập trang này, để tắt chức năng này quý khách\n                vào menu <strong>Cài Đặt</strong> -> <strong>Cài đặt chung</strong> -> <strong>Cập nhật phiên bản tự\n                    động</strong> -> <strong>Chọn OFF</strong>.</small>\n            ";
-    } else {
-        echo "            <small>Bạn đang tắt chức năng cập nhật phiên bản, để bật chức năng này quý khách\n                vào menu <strong>Cài Đặt</strong> -> <strong>Cài đặt chung</strong> -> <strong>Cập nhật phiên bản tự\n                    động</strong> -> <strong>Chọn ON</strong>.</small>\n            ";
-    }
-    echo "            <br>\n            <hr>\n            <p>Cộng đồng của chúng tôi:</p>\n            <ul>\n                <li>Nhóm Zalo: ";
-    echo $CMSNT->site("status_demo") == 1 ? "<strong>chỉ áp dụng khi mua website chính hãng tại CMSNT</strong>" : "<a class=\"text-primary\" href=\"https://zalo.me/g/idapcx933\" target=\"_blank\">[CMSNT]\n                        Changelog - Notification</a>";
-    echo "</li>\n                <li>Nhóm Zalo: ";
-    echo $CMSNT->site("status_demo") == 1 ? "<strong>chỉ áp dụng khi mua website chính hãng tại CMSNT</strong>" : "<a class=\"text-primary\" href=\"https://zalo.me/g/eululb377\" target=\"_blank\">[CMSNT] Trao\n                        đổi API - Suppliers</a>";
-    echo "</li>\n                <li>Nhóm Telegram: ";
-    echo $CMSNT->site("status_demo") == 1 ? "<strong>chỉ áp dụng khi mua website chính hãng tại CMSNT</strong>" : "<a class=\"text-primary\" href=\"https://t.me/+LVON7y2BKWU3ZDY9\" target=\"_blank\">[CMSNT]\n                        Tìm kiếm API - Suppliers</a>";
-    echo "</li>\n                <li>Kênh Telegram:\n                    ";
-    echo $CMSNT->site("status_demo") == 1 ? "<strong>chỉ áp dụng khi mua website chính hãng tại CMSNT</strong>" : "<a class=\"text-primary\" href=\"https://t.me/cmsntco\" target=\"_blank\">[CMSNT] Changelog - Notification</a>";
-    echo "                </li>\n            </ul>\n            <a class=\"btn btn-outline-primary btn-wave btn-sm\" type=\"button\"\n                    href=\"https://www.messenger.com/t/101939031161934?ref=kiemtrabanquyenwebsite\" target=\"_blank\"><i class=\"fa-brands fa-facebook-messenger\"></i> FANPAGE KIỂM TRA BẢN QUYỀN</a>\n                        <a class=\"btn btn-outline-secondary btn-wave btn-sm\" type=\"button\"\n                    href=\"https://t.me/cmsnt_bot\" target=\"_blank\"><i class=\"fa-brands fa-telegram\"></i> BOT KIỂM TRA BẢN QUYỀN</a>\n            <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"><i\n                    class=\"bi bi-x\"></i></button>\n        </div>\n        ";
+    echo "            <small>Bạn đang tắt chức năng cập nhật phiên bản, để bật chức năng này quý khách\n                vào menu <strong>Cài Đặt</strong> -> <strong>Cài đặt chung</strong> -> <strong>Cập nhật phiên bản tự\n                    động</strong> -> <strong>Chọn ON</strong>.</small>\n            ";
+    echo "</div>\n        ";
 }
 echo "        ";
 if($CMSNT->site("smtp_status") != 1) {

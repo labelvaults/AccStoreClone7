@@ -1,12 +1,12 @@
 <?php
 
-if(!defined("IN_SITE")) {
+if (!defined("IN_SITE")) {
     exit("The Request Not Found");
 }
 echo "\n<body>\n    <div class=\"backdrop\"></div><a class=\"backtop\" href=\"#\"><i class=\"fa-sharp fa-solid fa-chevron-up\"></i></a>\n    <div class=\"header-top\">\n        <div class=\"container\">\n            <div class=\"row\">\n                <div class=\"col-md-12 col-lg-5\">\n                    <div class=\"header-top-welcome\">\n                        <p>";
 echo $CMSNT->site("notice_top_left");
 echo "</p>\n                    </div>\n                </div>\n                <div class=\"col-md-5 col-lg-3\">\n                    <div class=\"header-top-select\">\n                        <div class=\"header-select\"><i class=\"icofont-world\"></i>\n                            ";
-if($CMSNT->site("language_type") == "manual") {
+if ($CMSNT->site("language_type") == "manual") {
     echo "                            <select class=\"select\" id=\"changeLanguage\" onchange=\"changeLanguage()\">\n                                ";
     foreach ($CMSNT->get_list("SELECT * FROM `languages` WHERE `status` = 1 ") as $lang) {
         echo "                                <option value=\"";
@@ -18,7 +18,7 @@ if($CMSNT->site("language_type") == "manual") {
         echo "</option>\n                                ";
     }
     echo "                            </select>\n                            ";
-} elseif($CMSNT->site("language_type") == "gtranslate") {
+} elseif ($CMSNT->site("language_type") == "gtranslate") {
     echo "                            ";
     echo $CMSNT->site("gtranslate_script");
     echo "                            ";
@@ -72,7 +72,7 @@ echo isset($getUser) ? $CMSNT->get_row(" SELECT COUNT(id) FROM `favorites` WHERE
 echo "</sup>\n                    </a>\n                    <button class=\"header-widget header-cart\" title=\"";
 echo __("Nạp tiền");
 echo "\"><i\n                            class=\"fa-solid fa-building-columns\"></i>\n\n                    </button>\n                    ";
-if(isset($getUser)) {
+if (isset($getUser)) {
     echo "                    <a href=\"";
     echo base_url("client/profile");
     echo "\" class=\"header-widget\" title=\"Profile\">\n                        <img src=\"";
@@ -95,7 +95,7 @@ echo "\">";
 echo __("Trang chủ");
 echo "</a>\n                            </li>\n                            <li class=\"navbar-item dropdown-megamenu\"><a class=\"navbar-link dropdown-arrow\"\n                                    href=\"#\">";
 echo __("Sản phẩm");
-echo "</a>\n                                <div class=\"megamenu\">\n                                    <div class=\"container\">\n                                        <div class=\"row row-cols-5\">\n                                            ";
+echo "</a>\n                                <div class=\"megamenu\" style=\"margin-top:45px\">\n                                    <div class=\"container\">\n                                        <div class=\"row row-cols-5\">\n                                            ";
 foreach ($CMSNT->get_list(" SELECT * FROM `categories` WHERE `status` = 1 AND `parent_id` = 0 ORDER BY `stt` DESC ") as $category) {
     echo "                                            <div class=\"col-4\">\n                                                <div class=\"megamenu-wrap\">\n                                                    <h5 class=\"megamenu-title\">";
     echo __($category["name"]);
@@ -114,7 +114,7 @@ foreach ($CMSNT->get_list(" SELECT * FROM `categories` WHERE `status` = 1 AND `p
 echo "                                        </div>\n                                    </div>\n                                </div>\n                            </li>\n                            <li class=\"navbar-item dropdown\">\n                                <a class=\"navbar-link dropdown-arrow\" href=\"#\">";
 echo __("Nạp tiền");
 echo "</a>\n                                <ul class=\"dropdown-position-list\">\n                                    ";
-if($CMSNT->site("bank_status") == 1) {
+if ($CMSNT->site("bank_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-bank");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -124,7 +124,7 @@ if($CMSNT->site("bank_status") == 1) {
     echo "</a></li>\n                                    ";
 }
 echo "                                    ";
-if($CMSNT->site("momo_status") == 1) {
+if ($CMSNT->site("momo_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-momo");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -134,7 +134,7 @@ if($CMSNT->site("momo_status") == 1) {
     echo "</a></li>\n                                    ";
 }
 echo "                                    ";
-if($CMSNT->site("card_status") == 1) {
+if ($CMSNT->site("card_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-card");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -144,7 +144,7 @@ if($CMSNT->site("card_status") == 1) {
     echo "</a>\n                                    </li>\n                                    ";
 }
 echo "                                    ";
-if($CMSNT->site("crypto_status") == 1) {
+if ($CMSNT->site("crypto_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-crypto");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -154,7 +154,7 @@ if($CMSNT->site("crypto_status") == 1) {
     echo "</a>\n                                    </li>\n                                    ";
 }
 echo "                                    ";
-if($CMSNT->site("paypal_status") == 1) {
+if ($CMSNT->site("paypal_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-paypal");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -164,7 +164,7 @@ if($CMSNT->site("paypal_status") == 1) {
     echo "</a></li>\n                                    ";
 }
 echo "                                    ";
-if($CMSNT->site("perfectmoney_status") == 1) {
+if ($CMSNT->site("perfectmoney_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-perfectmoney");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -174,7 +174,7 @@ if($CMSNT->site("perfectmoney_status") == 1) {
     echo "</a></li>\n                                    ";
 }
 echo "                                    ";
-if($CMSNT->site("toyyibpay_status") == 1) {
+if ($CMSNT->site("toyyibpay_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-toyyibpay");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -184,7 +184,7 @@ if($CMSNT->site("toyyibpay_status") == 1) {
     echo "</a></li>\n                                    ";
 }
 echo "                                    ";
-if($CMSNT->site("squadco_status") == 1) {
+if ($CMSNT->site("squadco_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-squadco");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -194,7 +194,17 @@ if($CMSNT->site("squadco_status") == 1) {
     echo "</a></li>\n                                    ";
 }
 echo "                                    ";
-if($CMSNT->site("flutterwave_status") == 1) {
+if ($CMSNT->site("flutterwave_status") == 1) {
+    echo "                                    <li><a href=\"";
+    echo base_url("?action=recharge-flutterwave");
+    echo "\"><img width=\"20px\"\n                                                src=\"";
+    echo base_url("mod/img/icon-flutterwave.png");
+    echo "\">\n                                            ";
+    echo __("Flutterwave");
+    echo "</a></li>\n                                    ";
+}
+echo "                                    ";
+if ($CMSNT->site("flutterwave_status") == 1) {
     echo "                                    <li><a href=\"";
     echo base_url("?action=recharge-flutterwave");
     echo "\"><img width=\"20px\"\n                                                src=\"";
@@ -228,7 +238,7 @@ echo base_url("client/transactions");
 echo "\">";
 echo __("Biến động số dư");
 echo "</a>\n                                    </li>\n                                </ul>\n                            </li>\n                            ";
-if($CMSNT->site("affiliate_status") == 1) {
+if ($CMSNT->site("affiliate_status") == 1) {
     echo "                            <li class=\"navbar-item dropdown\">\n                                <a class=\"navbar-link dropdown-arrow\" href=\"#\">";
     echo __("Affiliate Program");
     echo "</a>\n                                <ul class=\"dropdown-position-list\">\n                                    <li><a href=\"";
@@ -246,7 +256,7 @@ if($CMSNT->site("affiliate_status") == 1) {
     echo "</a>\n                                    </li>\n                                </ul>\n                            </li>\n                            ";
 }
 echo "                            ";
-if($CMSNT->site("blog_status") == 1) {
+if ($CMSNT->site("blog_status") == 1) {
     echo "                            <li class=\"navbar-item\"><a class=\"navbar-link\"\n                                    href=\"";
     echo base_url("blogs");
     echo "\">";
@@ -254,7 +264,7 @@ if($CMSNT->site("blog_status") == 1) {
     echo "</a></li>\n                            ";
 }
 echo "                            ";
-if($CMSNT->site("api_status") == 1) {
+if ($CMSNT->site("api_status") == 1) {
     echo "                            <li class=\"navbar-item\"><a class=\"navbar-link\"\n                                    href=\"";
     echo base_url("document-api");
     echo "\">";
@@ -262,7 +272,7 @@ if($CMSNT->site("api_status") == 1) {
     echo "</a></li>\n                            ";
 }
 echo "                            ";
-if(isset($getUser) && $getUser["admin"] != 0) {
+if (isset($getUser) && $getUser["admin"] != 0) {
     echo "                            <li class=\"navbar-item\"><a class=\"navbar-link\"\n                                    href=\"";
     echo base_url_admin();
     echo "\">";
@@ -298,7 +308,7 @@ foreach ($CMSNT->get_list(" SELECT * FROM `categories` WHERE `status` = 1 AND `p
 echo "        </ul>\n    </aside>\n    <aside class=\"cart-sidebar\">\n        <div class=\"cart-header\">\n            <div class=\"cart-total\"><i\n                    class=\"fa-solid fa-building-columns\"></i><span>";
 echo __("Chọn phương thức nạp tiền");
 echo "</span></div>\n            <button class=\"cart-close\"><i class=\"icofont-close\"></i></button>\n        </div>\n        <ul class=\"category-list\">\n            ";
-if($CMSNT->site("bank_status") == 1) {
+if ($CMSNT->site("bank_status") == 1) {
     echo "            <li class=\"category-item\">\n                <a class=\"category-link\" href=\"";
     echo base_url("?action=recharge-bank");
     echo "\"><img style=\"margin-right: 10px;\"\n                        width=\"30px\" src=\"";
@@ -308,7 +318,7 @@ if($CMSNT->site("bank_status") == 1) {
     echo "</a>\n            </li>\n            ";
 }
 echo "            ";
-if($CMSNT->site("momo_status") == 1) {
+if ($CMSNT->site("momo_status") == 1) {
     echo "            <li class=\"category-item\"><a href=\"";
     echo base_url("?action=recharge-momo");
     echo "\" class=\"category-link\"><img\n                        style=\"margin-right: 10px;\" width=\"30px\" src=\"";
@@ -318,7 +328,7 @@ if($CMSNT->site("momo_status") == 1) {
     echo "</a></li>\n            ";
 }
 echo "            ";
-if($CMSNT->site("card_status") == 1) {
+if ($CMSNT->site("card_status") == 1) {
     echo "            <li class=\"category-item\"><a class=\"category-link\" href=\"";
     echo base_url("?action=recharge-card");
     echo "\">\n                    <img width=\"30px\" style=\"margin-right: 10px;\" src=\"";
@@ -328,7 +338,7 @@ if($CMSNT->site("card_status") == 1) {
     echo "</a>\n            </li>\n            ";
 }
 echo "            ";
-if($CMSNT->site("crypto_status") == 1) {
+if ($CMSNT->site("crypto_status") == 1) {
     echo "            <li class=\"category-item\"><a class=\"category-link\" href=\"";
     echo base_url("?action=recharge-crypto");
     echo "\"><img\n                        style=\"margin-right: 10px;\" width=\"30px\" src=\"";
@@ -338,7 +348,7 @@ if($CMSNT->site("crypto_status") == 1) {
     echo "</a>\n            </li>\n            ";
 }
 echo "            ";
-if($CMSNT->site("paypal_status") == 1) {
+if ($CMSNT->site("paypal_status") == 1) {
     echo "            <li class=\"category-item\"><a class=\"category-link\" href=\"";
     echo base_url("?action=recharge-paypal");
     echo "\"><img\n                        style=\"margin-right: 10px;\" width=\"30px\" src=\"";
@@ -348,7 +358,7 @@ if($CMSNT->site("paypal_status") == 1) {
     echo "</a></li>\n            ";
 }
 echo "            ";
-if($CMSNT->site("perfectmoney_status") == 1) {
+if ($CMSNT->site("perfectmoney_status") == 1) {
     echo "            <li class=\"category-item\"><a class=\"category-link\"\n                    href=\"";
     echo base_url("?action=recharge-perfectmoney");
     echo "\"><img style=\"margin-right: 10px;\" width=\"30px\"\n                        src=\"";
@@ -358,7 +368,7 @@ if($CMSNT->site("perfectmoney_status") == 1) {
     echo "</a></li>\n            ";
 }
 echo "            ";
-if($CMSNT->site("toyyibpay_status") == 1) {
+if ($CMSNT->site("toyyibpay_status") == 1) {
     echo "            <li class=\"category-item\"><a class=\"category-link\" href=\"";
     echo base_url("?action=recharge-toyyibpay");
     echo "\"><img\n                        style=\"margin-right: 10px;\" width=\"30px\" src=\"";
@@ -368,7 +378,7 @@ if($CMSNT->site("toyyibpay_status") == 1) {
     echo "</a></li>\n            ";
 }
 echo "            ";
-if($CMSNT->site("squadco_status") == 1) {
+if ($CMSNT->site("squadco_status") == 1) {
     echo "            <li class=\"category-item\"><a class=\"category-link\" href=\"";
     echo base_url("?action=recharge-squadco");
     echo "\"><img\n                        style=\"margin-right: 10px;\" width=\"30px\" src=\"";
@@ -378,7 +388,7 @@ if($CMSNT->site("squadco_status") == 1) {
     echo "</a></li>\n            ";
 }
 echo "            ";
-if($CMSNT->site("flutterwave_status") == 1) {
+if ($CMSNT->site("flutterwave_status") == 1) {
     echo "            <li class=\"category-item\"><a class=\"category-link\"\n                    href=\"";
     echo base_url("?action=recharge-flutterwave");
     echo "\"><img style=\"margin-right: 10px;\" width=\"30px\"\n                        src=\"";
@@ -402,7 +412,7 @@ echo base_url();
 echo "\"><img src=\"";
 echo BASE_URL($CMSNT->site("logo_light"));
 echo "\"\n                    alt=\"logo\"></a><button class=\"nav-close\"><i class=\"icofont-close\"></i></button></div>\n        <div class=\"nav-content\">\n            <div class=\"nav-btn\">\n                ";
-if(isset($getUser)) {
+if (isset($getUser)) {
     echo "                <a href=\"";
     echo base_url("client/profile");
     echo "\" class=\"btn btn-inline\">\n                    <i class=\"fa fa-user\"></i> <span>";
@@ -438,7 +448,7 @@ foreach ($CMSNT->get_list(" SELECT * FROM `categories` WHERE `status` = 1 AND `p
 echo "                    </ul>\n                </li>\n                <li><a class=\"nav-link dropdown-link\" href=\"#\"><i\n                            class=\"fa-solid fa-building-columns\"></i>";
 echo __("Nạp tiền");
 echo "</a>\n                    <ul class=\"dropdown-list\">\n                        ";
-if($CMSNT->site("bank_status") == 1) {
+if ($CMSNT->site("bank_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-bank");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -448,7 +458,7 @@ if($CMSNT->site("bank_status") == 1) {
     echo "</a></li>\n                        ";
 }
 echo "                        ";
-if($CMSNT->site("momo_status") == 1) {
+if ($CMSNT->site("momo_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-momo");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -458,7 +468,7 @@ if($CMSNT->site("momo_status") == 1) {
     echo "</a></li>\n                        ";
 }
 echo "                        ";
-if($CMSNT->site("card_status") == 1) {
+if ($CMSNT->site("card_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-card");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -468,7 +478,7 @@ if($CMSNT->site("card_status") == 1) {
     echo "</a>\n                        </li>\n                        ";
 }
 echo "                        ";
-if($CMSNT->site("crypto_status") == 1) {
+if ($CMSNT->site("crypto_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-crypto");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -478,7 +488,7 @@ if($CMSNT->site("crypto_status") == 1) {
     echo "</a>\n                        </li>\n                        ";
 }
 echo "                        ";
-if($CMSNT->site("paypal_status") == 1) {
+if ($CMSNT->site("paypal_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-paypal");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -488,7 +498,7 @@ if($CMSNT->site("paypal_status") == 1) {
     echo "</a></li>\n                        ";
 }
 echo "                        ";
-if($CMSNT->site("perfectmoney_status") == 1) {
+if ($CMSNT->site("perfectmoney_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-perfectmoney");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -498,7 +508,7 @@ if($CMSNT->site("perfectmoney_status") == 1) {
     echo "</a></li>\n                        ";
 }
 echo "                        ";
-if($CMSNT->site("toyyibpay_status") == 1) {
+if ($CMSNT->site("toyyibpay_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-toyyibpay");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -508,7 +518,7 @@ if($CMSNT->site("toyyibpay_status") == 1) {
     echo "</a></li>\n                        ";
 }
 echo "                        ";
-if($CMSNT->site("squadco_status") == 1) {
+if ($CMSNT->site("squadco_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-squadco");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -518,7 +528,7 @@ if($CMSNT->site("squadco_status") == 1) {
     echo "</a></li>\n                        ";
 }
 echo "                        ";
-if($CMSNT->site("flutterwave_status") == 1) {
+if ($CMSNT->site("flutterwave_status") == 1) {
     echo "                        <li><a href=\"";
     echo base_url("?action=recharge-flutterwave");
     echo "\"><img width=\"20px\" class=\"me-2\"\n                                    src=\"";
@@ -552,7 +562,7 @@ echo base_url("client/transactions");
 echo "\">";
 echo __("Biến động số dư");
 echo "</a>\n                        </li>\n                    </ul>\n                </li>\n                ";
-if($CMSNT->site("affiliate_status") == 1) {
+if ($CMSNT->site("affiliate_status") == 1) {
     echo "                <li><a class=\"nav-link dropdown-link\" href=\"#\"><i\n                            class=\"fa-solid fa-money-bill-trend-up\"></i>";
     echo __("Affiliate Program");
     echo "</a>\n                    <ul class=\"dropdown-list\">\n                        <li><a href=\"";
@@ -570,7 +580,7 @@ if($CMSNT->site("affiliate_status") == 1) {
     echo "</a>\n                        </li>\n                    </ul>\n                </li>\n                ";
 }
 echo "                ";
-if($CMSNT->site("blog_status") == 1) {
+if ($CMSNT->site("blog_status") == 1) {
     echo "                <li><a class=\"nav-link\" href=\"";
     echo base_url("blogs");
     echo "\"><i\n                            class=\"fa-solid fa-newspaper\"></i>";
@@ -578,7 +588,7 @@ if($CMSNT->site("blog_status") == 1) {
     echo "</a></li>\n                ";
 }
 echo "                ";
-if($CMSNT->site("api_status") == 1) {
+if ($CMSNT->site("api_status") == 1) {
     echo "                <li><a class=\"nav-link\" href=\"";
     echo base_url("document-api");
     echo "\"><i\n                            class=\"fa-regular fa-file-code\"></i>";
@@ -586,7 +596,7 @@ if($CMSNT->site("api_status") == 1) {
     echo "</a></li>\n                ";
 }
 echo "                ";
-if(isset($getUser) && $getUser["admin"] != 0) {
+if (isset($getUser) && $getUser["admin"] != 0) {
     echo "                <li><a class=\"nav-link\" href=\"";
     echo base_url_admin();
     echo "\"><i\n                            class=\"fa-solid fa-gear\"></i>";
@@ -638,5 +648,3 @@ echo BASE_URL("ajaxs/client/update.php");
 echo "\",\n            method: \"POST\",\n            dataType: \"JSON\",\n            data: {\n                action: 'changeLanguage',\n                id: id\n            },\n            success: function(respone) {\n                if (respone.status == 'success') {\n                    location.reload();\n                } else {\n                    cuteAlert({\n                        type: \"error\",\n                        title: \"Error\",\n                        message: respone.msg,\n                        buttonText: \"Okay\"\n                    });\n                }\n            },\n            error: function() {\n                alert(html(response));\n                history.back();\n            }\n        });\n    }\n    </script>\n    <script>\n    function changeCurrency() {\n        var id = document.getElementById(\"changeCurrency\").value;\n        \$.ajax({\n            url: \"";
 echo BASE_URL("ajaxs/client/update.php");
 echo "\",\n            method: \"POST\",\n            dataType: \"JSON\",\n            data: {\n                action: 'changeCurrency',\n                id: id\n            },\n            success: function(respone) {\n                if (respone.status == 'success') {\n                    location.reload();\n                } else {\n                    cuteAlert({\n                        type: \"error\",\n                        title: \"Error\",\n                        message: respone.msg,\n                        buttonText: \"Okay\"\n                    });\n                }\n            },\n            error: function() {\n                alert(html(response));\n                history.back();\n            }\n        });\n    }\n    </script>";
-
-?>
